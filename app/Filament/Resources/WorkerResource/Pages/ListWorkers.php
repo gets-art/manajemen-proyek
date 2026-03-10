@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Filament\Resources\WorkerResource\Pages;
+
+use App\Filament\Resources\WorkerResource\Widgets\AllWorkersChart;
+use App\Filament\Resources\WorkerResource\Widgets\AllWorkersStatsOverview;
+use App\Filament\Resources\WorkerResource\WorkerResource;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
+
+class ListWorkers extends ListRecords
+{
+    protected static string $resource = WorkerResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make(),
+        ];
+    }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            AllWorkersStatsOverview::class,
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [
+            AllWorkersChart::class,
+        ];
+    }
+}

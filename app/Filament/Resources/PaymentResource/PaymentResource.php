@@ -1,0 +1,57 @@
+<?php
+
+namespace App\Filament\Resources\PaymentResource;
+
+use App\Filament\Resources\PaymentResource\Pages\CreatePayment;
+use App\Filament\Resources\PaymentResource\Pages\EditPayment;
+use App\Filament\Resources\PaymentResource\Pages\ListPayments;
+use App\Filament\Resources\PaymentResource\Pages\ViewPayment;
+use App\Filament\Resources\PaymentResource\Schemas\PaymentForm;
+use App\Filament\Resources\PaymentResource\Schemas\PaymentInfolist;
+use App\Filament\Resources\PaymentResource\Tables\PaymentsTable;
+use App\Models\Payment;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Tables\Table;
+
+class PaymentResource extends Resource
+{
+    protected static ?string $model = Payment::class;
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | \UnitEnum | null $navigationGroup = 'Finance';
+    protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string { return __('app.nav_groups.finance'); }
+    public static function getModelLabel(): string { return __('app.resources.payment.label'); }
+    public static function getPluralModelLabel(): string { return __('app.resources.payment.plural'); }
+
+    public static function form(Schema $schema): Schema
+    {
+        return PaymentForm::configure($schema);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return PaymentInfolist::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return PaymentsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListPayments::route('/'),
+            'create' => CreatePayment::route('/create'),
+            'view' => ViewPayment::route('/{record}'),
+            'edit' => EditPayment::route('/{record}/edit'),
+        ];
+    }
+}

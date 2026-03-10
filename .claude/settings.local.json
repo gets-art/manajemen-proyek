@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(echo FAILED:*)",
+      "Bash(cd /c/xampp/htdocs/Mosaad/eliteinclinic && php artisan vendor:publish --tag=filament-tables-views 2>&1)",
+      "Bash(cd:*)",
+      "Bash(test:*)",
+      "Bash(cd /c/xampp/htdocs/Mosaad/Lothgha && php artisan vendor:publish --tag=filament-views 2>&1 && php artisan vendor:publish --tag=filament-tables-views 2>&1)",
+      "Bash(php:*)",
+      "Bash(xargs grep:*)",
+      "Bash(composer:*)",
+      "WebFetch(domain:const.eliteinclinics.com)",
+      "WebFetch(domain:127.0.0.1)",
+      "Bash(rm -rf .git && git init)"
+    ]
+  }
+}
