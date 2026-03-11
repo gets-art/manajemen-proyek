@@ -62,18 +62,21 @@ class TaskForm
                         TextInput::make('final_total')
                             ->label(__('app.fields.final_total'))
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('EGP')
                             ->default(0),
 
                         TextInput::make('paid_total')
                             ->label(__('app.fields.paid_total'))
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('EGP')
                             ->default(0),
 
                         TextInput::make('rest_total')
                             ->label(__('app.fields.rest_total'))
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('EGP')
                             ->default(0),
                     ]),

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ClientResource;
 
-use App\Filament\Resources\ClientResource\Pages\CreateClient;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\ClientResource\Pages\EditClient;
 use App\Filament\Resources\ClientResource\Pages\ListClients;
 use App\Filament\Resources\ClientResource\Pages\ViewClient;
@@ -24,9 +24,7 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-user-group';
-    protected static string | \UnitEnum | null $navigationGroup = 'Project Management';
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.project_management'); }
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::ProjectManagement;
     public static function getModelLabel(): string { return __('app.resources.client.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.client.plural'); }
     protected static ?int $navigationSort = 3;
@@ -68,7 +66,6 @@ class ClientResource extends Resource
     {
         return [
             'index' => ListClients::route('/'),
-            'create' => CreateClient::route('/create'),
             'view' => ViewClient::route('/{record}'),
             'edit' => EditClient::route('/{record}/edit'),
         ];

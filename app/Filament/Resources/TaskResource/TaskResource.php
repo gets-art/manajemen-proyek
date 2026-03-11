@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\TaskResource;
 
+use App\Filament\NavigationGroup;
 use App\Filament\RelationManagers\ImagesRelationManager;
-use App\Filament\Resources\TaskResource\Pages\CreateTask;
 use App\Filament\Resources\TaskResource\Pages\EditTask;
 use App\Filament\Resources\TaskResource\Pages\ListTasks;
 use App\Filament\Resources\TaskResource\Pages\ViewTask;
@@ -21,10 +21,8 @@ class TaskResource extends Resource
 {
     protected static ?string $model = Task::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-clipboard-document-list';
-    protected static string | \UnitEnum | null $navigationGroup = 'Project Management';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::ProjectManagement;
     protected static ?int $navigationSort = 2;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.project_management'); }
     public static function getModelLabel(): string { return __('app.resources.task.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.task.plural'); }
 
@@ -56,7 +54,6 @@ class TaskResource extends Resource
     {
         return [
             'index' => ListTasks::route('/'),
-            'create' => CreateTask::route('/create'),
             'view' => ViewTask::route('/{record}'),
             'edit' => EditTask::route('/{record}/edit'),
         ];

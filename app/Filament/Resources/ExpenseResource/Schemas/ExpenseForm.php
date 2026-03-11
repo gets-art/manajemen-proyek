@@ -29,6 +29,7 @@ class ExpenseForm
                             ->label(__('app.fields.value'))
                             ->required()
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('EGP'),
 
                         DatePicker::make('date')

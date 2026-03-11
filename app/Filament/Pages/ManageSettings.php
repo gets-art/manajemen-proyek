@@ -9,6 +9,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use App\Filament\NavigationGroup;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -21,13 +22,9 @@ class ManageSettings extends Page implements HasForms
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Settings';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Settings;
 
     protected static ?int $navigationSort = 1;
-
-    protected static ?string $navigationLabel = 'App Settings';
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.settings'); }
     public static function getNavigationLabel(): string { return __('app.settings.nav_label'); }
 
     protected static ?string $title = 'App Settings';

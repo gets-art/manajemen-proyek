@@ -31,7 +31,7 @@ class CategoryForm
 
                         Select::make('parent_id')
                             ->label(__('app.fields.parent_category'))
-                            ->relationship('parent', 'name')
+                            ->relationship('parent', 'name', fn ($query, $record) => $record ? $query->where('id', '!=', $record->id) : $query)
                             ->searchable()
                             ->preload()
                             ->nullable(),

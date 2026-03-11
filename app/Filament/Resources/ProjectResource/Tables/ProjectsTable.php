@@ -23,16 +23,16 @@ class ProjectsTable
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('image')->size(40)->circular(),
                 TextColumn::make('name')->searchable()->sortable()->limit(30),
-                TextColumn::make('client.name')->label('Client')->placeholder('—'),
-                TextColumn::make('category.name')->label('Category')->placeholder('—'),
+                TextColumn::make('client.name')->label(__('app.fields.client'))->placeholder('—'),
+                TextColumn::make('category.name')->label(__('app.fields.category'))->placeholder('—'),
                 TextColumn::make('status')
                     ->badge()
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        0 => 'Pending',
-                        1 => 'In Progress',
-                        2 => 'Completed',
-                        3 => 'Cancelled',
-                        default => 'Unknown',
+                        0 => __('app.statuses.pending'),
+                        1 => __('app.statuses.in_progress'),
+                        2 => __('app.statuses.completed'),
+                        3 => __('app.statuses.cancelled'),
+                        default => __('app.statuses.unknown'),
                     })
                     ->color(fn (int $state): string => match ($state) {
                         0 => 'warning',
@@ -41,27 +41,27 @@ class ProjectsTable
                         3 => 'danger',
                         default => 'gray',
                     }),
-                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label('Total'),
-                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label('Paid'),
-                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label('Rest'),
-                TextColumn::make('start_date')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.total'))->sortable(),
+                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid'))->sortable(),
+                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.rest'))->sortable(),
+                TextColumn::make('start_date')->date()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 TrashedFilter::make(),
                 SelectFilter::make('status')
                     ->options([
-                        0 => 'Pending',
-                        1 => 'In Progress',
-                        2 => 'Completed',
-                        3 => 'Cancelled',
+                        0 => __('app.statuses.pending'),
+                        1 => __('app.statuses.in_progress'),
+                        2 => __('app.statuses.completed'),
+                        3 => __('app.statuses.cancelled'),
                     ]),
                 SelectFilter::make('client_id')
                     ->relationship('client', 'name')
-                    ->label('Client'),
+                    ->label(__('app.fields.client')),
                 SelectFilter::make('category_id')
                     ->relationship('category', 'name')
-                    ->label('Category'),
+                    ->label(__('app.fields.category')),
             ])
             ->recordActions([
                 ViewAction::make(),

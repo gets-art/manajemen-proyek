@@ -77,6 +77,8 @@ return [
         'total'            => 'Total',
         'final'            => 'Final',
         'message'          => 'Message',
+        'note'             => 'Note',
+        'by'               => 'By',
     ],
 
     'sections' => [
@@ -102,10 +104,13 @@ return [
         'worker_info'            => 'Worker Information',
         'worker_details'         => 'Worker Details',
         'task_details'           => 'Task Details',
+        'task_info'              => 'Task Information',
+        'purchase_details'       => 'Purchase Details',
         'financials'             => 'Financials',
         'metadata'               => 'Metadata',
         'basic_info'             => 'Basic Information',
         'notes'                  => 'Notes',
+        'project_details'        => 'Project Details',
     ],
 
     'notifications' => [
@@ -125,6 +130,7 @@ return [
     'actions' => [
         'add_task'     => 'Add Task',
         'add_expense'  => 'Add Expense',
+        'add_payment'  => 'Add Payment',
         'export_pdf'   => 'Export PDF',
         'export_excel' => 'Export Excel',
     ],
@@ -241,6 +247,9 @@ return [
         'balance'                => 'Balance',
         'outstanding_debt'       => 'Outstanding debt',
         'active_label'           => 'active',
+        'total_tasks'            => 'Total Tasks',
+        'net_profit'             => 'Net Profit',
+        'monthly_revenue_expenses' => 'Monthly Revenue vs Expenses',
     ],
 
     'reports' => [

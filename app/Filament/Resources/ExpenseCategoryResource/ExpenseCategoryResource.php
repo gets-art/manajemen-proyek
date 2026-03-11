@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\ExpenseCategoryResource;
 
-use App\Filament\Resources\ExpenseCategoryResource\Pages\CreateExpenseCategory;
-use App\Filament\Resources\ExpenseCategoryResource\Pages\EditExpenseCategory;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\ExpenseCategoryResource\Pages\ListExpenseCategories;
-use App\Filament\Resources\ExpenseCategoryResource\Pages\ViewExpenseCategory;
 use App\Filament\Resources\ExpenseCategoryResource\Schemas\ExpenseCategoryForm;
 use App\Filament\Resources\ExpenseCategoryResource\Schemas\ExpenseCategoryInfolist;
 use App\Filament\Resources\ExpenseCategoryResource\Tables\ExpenseCategoriesTable;
@@ -18,11 +16,8 @@ class ExpenseCategoryResource extends Resource
 {
     protected static ?string $model = ExpenseCategory::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
-    protected static string | \UnitEnum | null $navigationGroup = 'Finance';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Finance;
     protected static ?int $navigationSort = 4;
-    protected static ?string $navigationLabel = 'Expense Categories';
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.finance'); }
     public static function getNavigationLabel(): string { return __('app.resources.expense_category.nav'); }
     public static function getModelLabel(): string { return __('app.resources.expense_category.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.expense_category.plural'); }
@@ -51,9 +46,6 @@ class ExpenseCategoryResource extends Resource
     {
         return [
             'index' => ListExpenseCategories::route('/'),
-            'create' => CreateExpenseCategory::route('/create'),
-            'view' => ViewExpenseCategory::route('/{record}'),
-            'edit' => EditExpenseCategory::route('/{record}/edit'),
         ];
     }
 }

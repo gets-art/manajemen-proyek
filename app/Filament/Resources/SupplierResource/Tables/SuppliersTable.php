@@ -25,8 +25,8 @@ class SuppliersTable
                 TextColumn::make('phone')->searchable(),
                 TextColumn::make('address')->limit(30)->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('active')->boolean(),
-                TextColumn::make('purchase_tasks_count')->counts('purchaseTasks')->label('Purchases'),
-                TextColumn::make('payments_count')->counts('payments')->label('Payments'),
+                TextColumn::make('purchase_tasks_count')->counts('purchaseTasks')->label(__('app.columns.purchases')),
+                TextColumn::make('payments_count')->counts('payments')->label(__('app.columns.payments')),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

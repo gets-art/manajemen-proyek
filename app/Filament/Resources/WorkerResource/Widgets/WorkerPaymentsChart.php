@@ -30,26 +30,30 @@ class WorkerPaymentsChart extends ChartWidget
 
         $taskPayments = DB::table('task_workers')
             ->where('worker_id', $worker->id)
-            ->whereYear('created_at', now()->year)
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
-            ->groupByRaw('MONTH(created_at)')
-            ->pluck('total', 'month')
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as period, SUM(paid) as total")
+            ->groupByRaw("DATE_FORMAT(created_at, '%Y-%m')")
+            ->pluck('total', 'period')
             ->toArray();
 
         $otherPayments = $worker->payments()
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
-            ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
-            ->pluck('total', 'month')
+            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as period, SUM(paid) as total")
+            ->groupByRaw("DATE_FORMAT(created_at, '%Y-%m')")
+            ->pluck('total', 'period')
             ->toArray();
 
-        $months = [];
+        $allPeriods = collect(array_keys($taskPayments))
+            ->merge(array_keys($otherPayments))
+            ->unique()
+            ->sort()
+            ->values();
+
+        $labels = [];
         $tasksData = [];
         $paymentsData = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $months[] = Carbon::create()->month($i)->format('M');
-            $tasksData[] = $taskPayments[$i] ?? 0;
-            $paymentsData[] = $otherPayments[$i] ?? 0;
+        foreach ($allPeriods as $period) {
+            $labels[] = Carbon::parse($period . '-01')->format('M Y');
+            $tasksData[] = $taskPayments[$period] ?? 0;
+            $paymentsData[] = $otherPayments[$period] ?? 0;
         }
 
         return [
@@ -69,7 +73,7 @@ class WorkerPaymentsChart extends ChartWidget
                     'borderWidth' => 2,
                 ],
             ],
-            'labels' => $months,
+            'labels' => $labels,
         ];
     }
 }

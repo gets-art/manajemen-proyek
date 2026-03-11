@@ -8,6 +8,7 @@ use App\Models\PaymentMethod;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use App\Filament\NavigationGroup;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Carbon;
@@ -20,11 +21,9 @@ class DailyIncomeReport extends Page implements HasForms
 
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-banknotes';
 
-    protected static string | \UnitEnum | null $navigationGroup = 'Reports';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Reports;
 
     protected static ?int $navigationSort = 1;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.reports'); }
     public static function getNavigationLabel(): string { return __('app.daily_income_report.nav_label'); }
 
     public ?string $activePreset = 'all';
@@ -137,8 +136,8 @@ class DailyIncomeReport extends Page implements HasForms
         $methods = PaymentMethod::whereIn('id', $allMethodIds)->get();
 
         $paymentMethods = $methods->map(function ($method) use ($projectByMethod, $expenseByMethod) {
-            $projectTotal = $projectByMethod->where('payment_method_id', $method->id)->first()->total ?? 0;
-            $expenseTotal = $expenseByMethod->where('payment_method_id', $method->id)->first()->total ?? 0;
+            $projectTotal = $projectByMethod->where('payment_method_id', $method->id)->first()?->total ?? 0;
+            $expenseTotal = $expenseByMethod->where('payment_method_id', $method->id)->first()?->total ?? 0;
             return [
                 'name' => $method->name,
                 'image' => $method->image,

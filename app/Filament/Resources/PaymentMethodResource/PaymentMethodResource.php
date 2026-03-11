@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\PaymentMethodResource;
 
-use App\Filament\Resources\PaymentMethodResource\Pages\CreatePaymentMethod;
-use App\Filament\Resources\PaymentMethodResource\Pages\EditPaymentMethod;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\PaymentMethodResource\Pages\ListPaymentMethods;
-use App\Filament\Resources\PaymentMethodResource\Pages\ViewPaymentMethod;
 use App\Filament\Resources\PaymentMethodResource\Schemas\PaymentMethodForm;
 use App\Filament\Resources\PaymentMethodResource\Schemas\PaymentMethodInfolist;
 use App\Filament\Resources\PaymentMethodResource\Tables\PaymentMethodsTable;
@@ -18,10 +16,8 @@ class PaymentMethodResource extends Resource
 {
     protected static ?string $model = PaymentMethod::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-credit-card';
-    protected static string | \UnitEnum | null $navigationGroup = 'Finance';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Finance;
     protected static ?int $navigationSort = 2;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.finance'); }
     public static function getModelLabel(): string { return __('app.resources.payment_method.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.payment_method.plural'); }
 
@@ -49,9 +45,6 @@ class PaymentMethodResource extends Resource
     {
         return [
             'index' => ListPaymentMethods::route('/'),
-            'create' => CreatePaymentMethod::route('/create'),
-            'view' => ViewPaymentMethod::route('/{record}'),
-            'edit' => EditPaymentMethod::route('/{record}/edit'),
         ];
     }
 }

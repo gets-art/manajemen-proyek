@@ -23,7 +23,7 @@ class PaymentMethodsTable
                 ImageColumn::make('image')->circular(),
                 TextColumn::make('name')->searchable()->sortable(),
                 IconColumn::make('active')->boolean(),
-                TextColumn::make('payments_count')->counts('payments')->label('Payments'),
+                TextColumn::make('payments_count')->counts('payments')->label(__('app.columns.payments')),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([

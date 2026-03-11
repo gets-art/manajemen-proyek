@@ -35,6 +35,8 @@ class Project extends Model
             'paid_total' => 'double',
             'rest_total' => 'double',
             'observation' => 'double',
+            'start_date' => 'date',
+            'end_date' => 'date',
         ];
     }
 

@@ -43,8 +43,8 @@ class LatestProjectsTable extends TableWidget
                         3 => 'danger',
                         default => 'gray',
                     }),
-                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.total')),
-                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid')),
+                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.total'))->color('primary')->weight('bold'),
+                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid'))->color('success'),
                 TextColumn::make('created_at')->dateTime()->label(__('app.columns.created')),
             ])
             ->paginated(false);

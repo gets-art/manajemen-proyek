@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\WorkerResource;
 
+use App\Filament\NavigationGroup;
 use App\Filament\RelationManagers\PaymentsRelationManager;
-use App\Filament\Resources\WorkerResource\Pages\CreateWorker;
 use App\Filament\Resources\WorkerResource\Pages\EditWorker;
 use App\Filament\Resources\WorkerResource\Pages\ListWorkers;
 use App\Filament\Resources\WorkerResource\Pages\ViewWorker;
@@ -24,10 +24,8 @@ class WorkerResource extends Resource
 {
     protected static ?string $model = Worker::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-wrench-screwdriver';
-    protected static string | \UnitEnum | null $navigationGroup = 'HR Management';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::HrManagement;
     protected static ?int $navigationSort = 1;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.hr_management'); }
     public static function getModelLabel(): string { return __('app.resources.worker.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.worker.plural'); }
 
@@ -68,7 +66,6 @@ class WorkerResource extends Resource
     {
         return [
             'index' => ListWorkers::route('/'),
-            'create' => CreateWorker::route('/create'),
             'view' => ViewWorker::route('/{record}'),
             'edit' => EditWorker::route('/{record}/edit'),
         ];

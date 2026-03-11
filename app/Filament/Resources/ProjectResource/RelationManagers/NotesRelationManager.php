@@ -20,7 +20,7 @@ class NotesRelationManager extends RelationManager
             ->components([
                 Textarea::make('content')
                     ->required()
-                    ->label('Note')
+                    ->label(__('app.fields.note'))
                     ->rows(4)
                     ->columnSpanFull(),
             ]);
@@ -33,13 +33,13 @@ class NotesRelationManager extends RelationManager
             ->modifyQueryUsing(fn ($query) => $query->with('user'))
             ->columns([
                 TextColumn::make('content')
-                    ->label('Note')
+                    ->label(__('app.fields.note'))
                     ->wrap()
                     ->limit(100),
                 TextColumn::make('user.name')
-                    ->label('By'),
+                    ->label(__('app.fields.by')),
                 TextColumn::make('created_at')
-                    ->label('Date')
+                    ->label(__('app.fields.date'))
                     ->dateTime('M d, Y H:i')
                     ->sortable(),
             ])

@@ -3,10 +3,13 @@
 namespace App\Filament\Resources\ProjectResource\RelationManagers;
 
 use Filament\Actions;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -15,6 +18,31 @@ use Illuminate\Support\Facades\Auth;
 class ExpensesRelationManager extends RelationManager
 {
     protected static string $relationship = 'expenses';
+
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
+
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make(__('app.sections.expense_details'))
+                    ->icon('heroicon-o-receipt-percent')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('name'),
+                        TextEntry::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('date')->date(),
+                        TextEntry::make('expenseCategory.name')->label(__('app.fields.expense_category')),
+                        TextEntry::make('paymentMethod.name')->label(__('app.fields.payment_method'))->placeholder('—'),
+                        TextEntry::make('description')->placeholder('—')->columnSpanFull(),
+                        TextEntry::make('created_at')->dateTime(),
+                    ]),
+            ]);
+    }
 
     public function form(Schema $schema): Schema
     {
@@ -28,10 +56,11 @@ class ExpensesRelationManager extends RelationManager
                 TextInput::make('value')
                     ->required()
                     ->numeric()
+                    ->minValue(0)
                     ->prefix('EGP'),
-                TextInput::make('date')
+                DatePicker::make('date')
                     ->required()
-                    ->maxLength(255),
+                    ->native(false),
                 Select::make('expense_category_id')
                     ->relationship('expenseCategory', 'name')
                     ->required()
@@ -52,11 +81,12 @@ class ExpensesRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->sortable(),
-                TextColumn::make('date'),
-                TextColumn::make('expenseCategory.name')->label('Category'),
-                TextColumn::make('paymentMethod.name')->label('Method')->placeholder('—'),
+                TextColumn::make('date')->date()->sortable(),
+                TextColumn::make('expenseCategory.name')->label(__('app.fields.expense_category')),
+                TextColumn::make('paymentMethod.name')->label(__('app.fields.payment_method'))->placeholder('—'),
             ])
             ->recordActions([
+                Actions\ViewAction::make(),
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
             ])

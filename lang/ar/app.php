@@ -77,6 +77,8 @@ return [
         'total'            => 'الإجمالي',
         'final'            => 'النهائي',
         'message'          => 'الرسالة',
+        'note'             => 'ملاحظة',
+        'by'               => 'بواسطة',
     ],
 
     'sections' => [
@@ -102,10 +104,13 @@ return [
         'worker_info'             => 'معلومات العامل',
         'worker_details'          => 'تفاصيل العامل',
         'task_details'            => 'تفاصيل المهمة',
+        'task_info'               => 'معلومات المهمة',
+        'purchase_details'        => 'تفاصيل المشتريات',
         'financials'              => 'المالية',
         'metadata'                => 'البيانات الوصفية',
         'basic_info'              => 'المعلومات الأساسية',
         'notes'                   => 'ملاحظات',
+        'project_details'         => 'تفاصيل المشروع',
     ],
 
     'notifications' => [
@@ -125,6 +130,7 @@ return [
     'actions' => [
         'add_task'     => 'إضافة مهمة',
         'add_expense'  => 'إضافة مصروف',
+        'add_payment'  => 'إضافة دفعة',
         'export_pdf'   => 'تصدير PDF',
         'export_excel' => 'تصدير Excel',
     ],
@@ -241,6 +247,9 @@ return [
         'balance'                => 'الرصيد',
         'outstanding_debt'       => 'دين مستحق',
         'active_label'           => 'نشط',
+        'total_tasks'            => 'إجمالي المهام',
+        'net_profit'             => 'صافي الربح',
+        'monthly_revenue_expenses' => 'الإيرادات مقابل المصروفات الشهرية',
     ],
 
     'reports' => [

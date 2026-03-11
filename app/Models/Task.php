@@ -34,6 +34,8 @@ class Task extends Model
             'final_total' => 'double',
             'rest_total' => 'double',
             'paid_total' => 'double',
+            'start_date' => 'date',
+            'end_date' => 'date',
         ];
     }
 

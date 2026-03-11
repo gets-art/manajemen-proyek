@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\LanguageResource;
 
-use App\Filament\Resources\LanguageResource\Pages\CreateLanguage;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\LanguageResource\Pages\EditLanguage;
 use App\Filament\Resources\LanguageResource\Pages\ListLanguages;
 use App\Filament\Resources\LanguageResource\Pages\ViewLanguage;
@@ -18,10 +18,8 @@ class LanguageResource extends Resource
 {
     protected static ?string $model = Language::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-language';
-    protected static string | \UnitEnum | null $navigationGroup = 'Settings';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Settings;
     protected static ?int $navigationSort = 2;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.settings'); }
     public static function getModelLabel(): string { return __('app.resources.language.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.language.plural'); }
 
@@ -49,7 +47,6 @@ class LanguageResource extends Resource
     {
         return [
             'index' => ListLanguages::route('/'),
-            'create' => CreateLanguage::route('/create'),
             'view' => ViewLanguage::route('/{record}'),
             'edit' => EditLanguage::route('/{record}/edit'),
         ];

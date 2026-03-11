@@ -22,18 +22,11 @@ class PaymentsTable
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('paymentable_type')
                     ->label(__('app.fields.type'))
-                    ->formatStateUsing(fn (string $state): string => class_basename($state))
-                    ->badge()
-                    ->color(fn (string $state): string => match (class_basename($state)) {
-                        'Project' => 'success',
-                        'Worker' => 'info',
-                        'Supplier' => 'warning',
-                        default => 'gray',
-                    }),
+                    ->formatStateUsing(fn (string $state): string => class_basename($state)),
                 TextColumn::make('paymentable.name')->label(__('app.fields.paid_to'))->searchable(),
-                TextColumn::make('paymentMethod.name')->label(__('app.fields.method')),
+                TextColumn::make('paymentMethod.name')->label(__('app.fields.method'))->sortable(),
                 TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount'))->sortable(),
-                TextColumn::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
+                TextColumn::make('payment_code')->label(__('app.fields.code'))->placeholder('—')->searchable(),
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->filters([

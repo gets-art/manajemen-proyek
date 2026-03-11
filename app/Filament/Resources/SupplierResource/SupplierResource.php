@@ -2,8 +2,8 @@
 
 namespace App\Filament\Resources\SupplierResource;
 
+use App\Filament\NavigationGroup;
 use App\Filament\RelationManagers\PaymentsRelationManager;
-use App\Filament\Resources\SupplierResource\Pages\CreateSupplier;
 use App\Filament\Resources\SupplierResource\Pages\EditSupplier;
 use App\Filament\Resources\SupplierResource\Pages\ListSuppliers;
 use App\Filament\Resources\SupplierResource\Pages\ViewSupplier;
@@ -24,10 +24,8 @@ class SupplierResource extends Resource
 {
     protected static ?string $model = Supplier::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-truck';
-    protected static string | \UnitEnum | null $navigationGroup = 'Procurement';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Procurement;
     protected static ?int $navigationSort = 1;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.procurement'); }
     public static function getModelLabel(): string { return __('app.resources.supplier.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.supplier.plural'); }
 
@@ -68,7 +66,6 @@ class SupplierResource extends Resource
     {
         return [
             'index' => ListSuppliers::route('/'),
-            'create' => CreateSupplier::route('/create'),
             'view' => ViewSupplier::route('/{record}'),
             'edit' => EditSupplier::route('/{record}/edit'),
         ];

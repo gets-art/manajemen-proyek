@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\CategoryResource;
 
-use App\Filament\Resources\CategoryResource\Pages\CreateCategory;
-use App\Filament\Resources\CategoryResource\Pages\EditCategory;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\CategoryResource\Pages\ListCategories;
-use App\Filament\Resources\CategoryResource\Pages\ViewCategory;
 use App\Filament\Resources\CategoryResource\Schemas\CategoryForm;
 use App\Filament\Resources\CategoryResource\Schemas\CategoryInfolist;
 use App\Filament\Resources\CategoryResource\Tables\CategoriesTable;
@@ -18,10 +16,8 @@ class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-squares-2x2';
-    protected static string | \UnitEnum | null $navigationGroup = 'Catalog';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Catalog;
     protected static ?int $navigationSort = 1;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.catalog'); }
     public static function getModelLabel(): string { return __('app.resources.category.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.category.plural'); }
 
@@ -49,9 +45,6 @@ class CategoryResource extends Resource
     {
         return [
             'index' => ListCategories::route('/'),
-            'create' => CreateCategory::route('/create'),
-            'view' => ViewCategory::route('/{record}'),
-            'edit' => EditCategory::route('/{record}/edit'),
         ];
     }
 }

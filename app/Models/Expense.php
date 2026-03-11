@@ -26,6 +26,7 @@ class Expense extends Model
     {
         return [
             'value' => 'double',
+            'date' => 'date',
         ];
     }
 

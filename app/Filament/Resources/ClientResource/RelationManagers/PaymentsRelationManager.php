@@ -7,7 +7,9 @@ use App\Models\Project;
 use Filament\Actions;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -26,6 +28,24 @@ class PaymentsRelationManager extends RelationManager
     public function isReadOnly(): bool
     {
         return false;
+    }
+
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make(__('app.sections.payment_details'))
+                    ->icon('heroicon-o-banknotes')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('paymentable.name')->label(__('app.fields.project')),
+                        TextEntry::make('paymentMethod.name')->label(__('app.fields.method')),
+                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                        TextEntry::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
+                        TextEntry::make('created_at')->dateTime(),
+                    ]),
+            ]);
     }
 
     public function form(Schema $schema): Schema
@@ -65,6 +85,7 @@ class PaymentsRelationManager extends RelationManager
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->recordActions([
+                Actions\ViewAction::make(),
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
             ])

@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources\ProductResource;
 
-use App\Filament\Resources\ProductResource\Pages\CreateProduct;
-use App\Filament\Resources\ProductResource\Pages\EditProduct;
+use App\Filament\NavigationGroup;
 use App\Filament\Resources\ProductResource\Pages\ListProducts;
-use App\Filament\Resources\ProductResource\Pages\ViewProduct;
 use App\Filament\Resources\ProductResource\Schemas\ProductForm;
 use App\Filament\Resources\ProductResource\Schemas\ProductInfolist;
 use App\Filament\Resources\ProductResource\Tables\ProductsTable;
@@ -18,10 +16,8 @@ class ProductResource extends Resource
 {
     protected static ?string $model = Product::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-cube';
-    protected static string | \UnitEnum | null $navigationGroup = 'Catalog';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::Catalog;
     protected static ?int $navigationSort = 2;
-
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.catalog'); }
     public static function getModelLabel(): string { return __('app.resources.product.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.product.plural'); }
 
@@ -49,9 +45,6 @@ class ProductResource extends Resource
     {
         return [
             'index' => ListProducts::route('/'),
-            'create' => CreateProduct::route('/create'),
-            'view' => ViewProduct::route('/{record}'),
-            'edit' => EditProduct::route('/{record}/edit'),
         ];
     }
 }

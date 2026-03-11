@@ -7,7 +7,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -15,6 +17,31 @@ use Filament\Tables\Table;
 class PurchaseTasksRelationManager extends RelationManager
 {
     protected static string $relationship = 'purchaseTasks';
+
+    public function isReadOnly(): bool
+    {
+        return false;
+    }
+
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make(__('app.sections.purchase_details'))
+                    ->icon('heroicon-o-shopping-cart')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('supplier.name')->label(__('app.fields.supplier')),
+                        TextEntry::make('product.name')->label(__('app.fields.product'))->placeholder('—'),
+                        TextEntry::make('quantity'),
+                        TextEntry::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.unit_price')),
+                        TextEntry::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final')),
+                    ]),
+            ]);
+    }
 
     public function form(Schema $schema): Schema
     {
@@ -32,6 +59,7 @@ class PurchaseTasksRelationManager extends RelationManager
                     ->nullable(),
                 TextInput::make('quantity')
                     ->numeric()
+                    ->minValue(1)
                     ->default(1)
                     ->required()
                     ->reactive()
@@ -45,6 +73,7 @@ class PurchaseTasksRelationManager extends RelationManager
                     }),
                 TextInput::make('unit_price')
                     ->numeric()
+                    ->minValue(0)
                     ->prefix('EGP')
                     ->default(0)
                     ->required()
@@ -64,6 +93,7 @@ class PurchaseTasksRelationManager extends RelationManager
                     ->readOnly(),
                 TextInput::make('discount')
                     ->numeric()
+                    ->minValue(0)
                     ->prefix('EGP')
                     ->default(0)
                     ->reactive()
@@ -94,6 +124,7 @@ class PurchaseTasksRelationManager extends RelationManager
                 TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final')),
             ])
             ->recordActions([
+                Actions\ViewAction::make(),
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
             ])

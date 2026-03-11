@@ -34,7 +34,7 @@ class ProductsTable
                 TrashedFilter::make(),
                 SelectFilter::make('category_id')
                     ->relationship('category', 'name')
-                    ->label('Category'),
+                    ->label(__('app.fields.category')),
             ])
             ->recordActions([
                 ViewAction::make(),

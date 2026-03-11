@@ -8,7 +8,9 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -20,6 +22,49 @@ class ProjectsRelationManager extends RelationManager
     public function isReadOnly(): bool
     {
         return false;
+    }
+
+    public function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make(__('app.sections.project_details'))
+                    ->icon('heroicon-o-building-office-2')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('name')->label(__('app.fields.name')),
+                        TextEntry::make('category.name')->label(__('app.fields.category'))->placeholder('—'),
+                        TextEntry::make('status')
+                            ->badge()
+                            ->formatStateUsing(fn (int $state): string => match ($state) {
+                                0 => __('app.statuses.pending'),
+                                1 => __('app.statuses.in_progress'),
+                                2 => __('app.statuses.completed'),
+                                3 => __('app.statuses.cancelled'),
+                                default => __('app.statuses.unknown'),
+                            })
+                            ->color(fn (int $state): string => match ($state) {
+                                0 => 'warning',
+                                1 => 'info',
+                                2 => 'success',
+                                3 => 'danger',
+                                default => 'gray',
+                            }),
+                        TextEntry::make('start_date')->label(__('app.fields.start_date'))->placeholder('—'),
+                        TextEntry::make('end_date')->label(__('app.fields.end_date'))->placeholder('—'),
+                        TextEntry::make('description')->label(__('app.fields.description'))->placeholder('—')->columnSpanFull(),
+                    ]),
+                Section::make(__('app.sections.financials'))
+                    ->icon('heroicon-o-currency-dollar')
+                    ->columns(3)
+                    ->columnSpanFull()
+                    ->schema([
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final_total')),
+                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_total')),
+                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.rest_total')),
+                    ]),
+            ]);
     }
 
     public function form(Schema $schema): Schema

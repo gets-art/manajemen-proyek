@@ -2,14 +2,13 @@
 
 namespace App\Filament\Resources\ProjectResource;
 
+use App\Filament\NavigationGroup;
 use App\Filament\RelationManagers\ImagesRelationManager;
 use App\Filament\RelationManagers\PaymentsRelationManager;
-use App\Filament\Resources\ProjectResource\Pages\CreateProject;
 use App\Filament\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Resources\ProjectResource\Pages\ListProjects;
 use App\Filament\Resources\ProjectResource\Pages\ViewProject;
 use App\Filament\Resources\ProjectResource\RelationManagers\ExpensesRelationManager;
-use App\Filament\Resources\ProjectResource\RelationManagers\NotesRelationManager;
 use App\Filament\Resources\ProjectResource\RelationManagers\TasksRelationManager;
 use App\Filament\Resources\ProjectResource\Schemas\ProjectForm;
 use App\Filament\Resources\ProjectResource\Schemas\ProjectInfolist;
@@ -29,10 +28,9 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-building-office-2';
-    protected static string | \UnitEnum | null $navigationGroup = 'Project Management';
+    protected static string | \UnitEnum | null $navigationGroup = NavigationGroup::ProjectManagement;
     protected static ?int $navigationSort = 1;
 
-    public static function getNavigationGroup(): ?string { return __('app.nav_groups.project_management'); }
     public static function getModelLabel(): string { return __('app.resources.project.label'); }
     public static function getPluralModelLabel(): string { return __('app.resources.project.plural'); }
 
@@ -57,7 +55,6 @@ class ProjectResource extends Resource
             TasksRelationManager::class,
             PaymentsRelationManager::class,
             ExpensesRelationManager::class,
-            NotesRelationManager::class,
             ImagesRelationManager::class,
         ];
     }
@@ -78,7 +75,6 @@ class ProjectResource extends Resource
     {
         return [
             'index' => ListProjects::route('/'),
-            'create' => CreateProject::route('/create'),
             'view' => ViewProject::route('/{record}'),
             'edit' => EditProject::route('/{record}/edit'),
         ];

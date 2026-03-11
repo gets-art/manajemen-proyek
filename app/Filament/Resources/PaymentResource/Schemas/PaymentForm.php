@@ -46,7 +46,9 @@ class PaymentForm
                         TextInput::make('paid')
                             ->label(__('app.fields.amount'))
                             ->required()
-                            ->numeric(),
+                            ->numeric()
+                            ->minValue(0)
+                            ->prefix('EGP'),
 
                         TextInput::make('payment_code')
                             ->label(__('app.fields.payment_code'))
