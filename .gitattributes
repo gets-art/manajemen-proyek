@@ -9,3 +9,13 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Language stats: hide non-backend assets so PHP/Blade dominate
+*.js linguist-vendored
+*.css linguist-vendored
+*.scss linguist-vendored
+*.html linguist-vendored
+public/* linguist-vendored
+resources/js/* linguist-vendored
+resources/css/* linguist-vendored
+resources/sass/* linguist-vendored
