@@ -62,23 +62,35 @@ class TaskForm
                         TextInput::make('final_total')
                             ->label(__('app.fields.final_total'))
                             ->numeric()
+                            ->mask(\Filament\Support\RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
                             ->minValue(0)
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0),
 
                         TextInput::make('paid_total')
                             ->label(__('app.fields.paid_total'))
                             ->numeric()
+                            ->mask(\Filament\Support\RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
                             ->minValue(0)
-                            ->prefix('EGP')
-                            ->default(0),
+                            ->prefix('IDR')
+                            ->default(0)
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->helperText('Otomatis dihitung dari tabel Pembayaran.'),
 
                         TextInput::make('rest_total')
                             ->label(__('app.fields.rest_total'))
                             ->numeric()
+                            ->mask(\Filament\Support\RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
                             ->minValue(0)
-                            ->prefix('EGP')
-                            ->default(0),
+                            ->prefix('IDR')
+                            ->default(0)
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->helperText('Otomatis dihitung dari Nilai Kontrak - Sudah Dibayar.'),
                     ]),
             ]);
     }

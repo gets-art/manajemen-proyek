@@ -22,7 +22,7 @@ class ProductInfolist
                         ImageEntry::make('image')->size(80),
                         TextEntry::make('name'),
                         TextEntry::make('description')->placeholder('—'),
-                        TextEntry::make('price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
                         TextEntry::make('category.name')->label('Category'),
                         IconEntry::make('active')->boolean(),
                         IconEntry::make('featured')->boolean(),

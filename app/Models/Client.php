@@ -14,12 +14,18 @@ class Client extends Model
         'name',
         'email',
         'phone',
+        'address',
         'notes',
+        'branch_id',
     ];
+
+    public function branch(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
 
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
     }
-
 }

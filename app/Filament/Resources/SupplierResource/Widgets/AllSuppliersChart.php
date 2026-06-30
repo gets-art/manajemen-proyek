@@ -24,18 +24,23 @@ class AllSuppliersChart extends ChartWidget
 
     protected function getData(): array
     {
-        $purchases = DB::table('purchase_tasks')
-            ->selectRaw('MONTH(created_at) as month, SUM(total) as total')
-            ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+        $year = now()->year;
+        
+        $driver = DB::getDriverName();
+        $monthQuery = $driver === 'sqlite' ? "CAST(strftime('%m', created_at) AS INTEGER)" : 'MONTH(created_at)';
+
+        $purchases = \App\Models\PurchaseTask::query()
+            ->selectRaw("$monthQuery as month, SUM(total) as total")
+            ->whereYear('created_at', $year)
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
-        $payments = DB::table('payments')
-            ->where('paymentable_type', 'App\\Models\\Supplier')
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
-            ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+        $payments = \App\Models\Payment::query()
+            ->where('paymentable_type', \App\Models\Supplier::class)
+            ->selectRaw("$monthQuery as month, SUM(paid) as total")
+            ->whereYear('created_at', $year)
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
@@ -51,7 +56,7 @@ class AllSuppliersChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.purchases_egp'),
+                    'label' => __('app.widgets.purchases_IDR'),
                     'data' => $purchasesData,
                     'borderColor' => 'rgb(59, 130, 246)',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
@@ -59,7 +64,7 @@ class AllSuppliersChart extends ChartWidget
                     'tension' => 0.4,
                 ],
                 [
-                    'label' => __('app.widgets.payments_egp'),
+                    'label' => __('app.widgets.payments_IDR'),
                     'data' => $paymentsData,
                     'borderColor' => 'rgb(16, 185, 129)',
                     'backgroundColor' => 'rgba(16, 185, 129, 0.1)',

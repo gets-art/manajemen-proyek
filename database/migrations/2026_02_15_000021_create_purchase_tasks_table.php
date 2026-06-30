@@ -14,10 +14,10 @@ return new class extends Migration
             $table->integer('task_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->double('unit_price');
-            $table->double('total');
-            $table->double('discount');
-            $table->double('final_total');
+            $table->decimal('unit_price', 15, 2);
+            $table->decimal('total', 15, 2);
+            $table->decimal('discount', 15, 2);
+            $table->decimal('final_total', 15, 2);
             $table->timestamps();
         });
     }

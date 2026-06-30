@@ -30,7 +30,7 @@ class ExpenseForm
                             ->required()
                             ->numeric()
                             ->minValue(0)
-                            ->prefix('EGP'),
+                            ->prefix('IDR'),
 
                         DatePicker::make('date')
                             ->label(__('app.fields.date'))

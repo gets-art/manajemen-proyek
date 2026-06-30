@@ -25,7 +25,7 @@ class Expense extends Model
     protected function casts(): array
     {
         return [
-            'value' => 'double',
+            'value' => 'decimal:2',
             'date' => 'date',
         ];
     }

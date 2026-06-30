@@ -33,7 +33,7 @@ class WorkersRelationManager extends RelationManager
                     ->schema([
                         TextEntry::make('name')->label(__('app.fields.name')),
                         TextEntry::make('phone_number')->label(__('app.fields.phone'))->placeholder('—'),
-                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_amount')),
+                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.paid_amount')),
                     ]),
             ]);
     }
@@ -44,7 +44,7 @@ class WorkersRelationManager extends RelationManager
             ->components([
                 TextInput::make('paid')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->label(__('app.fields.paid_amount')),
             ]);
@@ -56,7 +56,7 @@ class WorkersRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('phone_number')->label(__('app.fields.phone')),
-                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid')),
+                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.paid')),
             ])
             ->recordActions([
                 Actions\ViewAction::make(),
@@ -70,7 +70,7 @@ class WorkersRelationManager extends RelationManager
                         $action->getRecordSelect(),
                         TextInput::make('paid')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0)
                             ->label(__('app.fields.paid_amount')),
                     ]),

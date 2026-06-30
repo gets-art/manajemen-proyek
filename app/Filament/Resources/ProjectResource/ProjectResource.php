@@ -9,6 +9,9 @@ use App\Filament\Resources\ProjectResource\Pages\EditProject;
 use App\Filament\Resources\ProjectResource\Pages\ListProjects;
 use App\Filament\Resources\ProjectResource\Pages\ViewProject;
 use App\Filament\Resources\ProjectResource\RelationManagers\ExpensesRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\ChangeOrdersRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\PaymentTermsRelationManager;
+use App\Filament\Resources\ProjectResource\RelationManagers\ProjectBudgetsRelationManager;
 use App\Filament\Resources\ProjectResource\RelationManagers\TasksRelationManager;
 use App\Filament\Resources\ProjectResource\Schemas\ProjectForm;
 use App\Filament\Resources\ProjectResource\Schemas\ProjectInfolist;
@@ -53,6 +56,9 @@ class ProjectResource extends Resource
     {
         return [
             TasksRelationManager::class,
+            ProjectBudgetsRelationManager::class,
+            ChangeOrdersRelationManager::class,
+            PaymentTermsRelationManager::class,
             PaymentsRelationManager::class,
             ExpensesRelationManager::class,
             ImagesRelationManager::class,

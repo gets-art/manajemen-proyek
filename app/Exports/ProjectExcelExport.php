@@ -63,10 +63,10 @@ class ProjectExcelExport
             },
             'Start Date' => $project->start_date ?? '—',
             'End Date' => $project->end_date ?? '—',
-            'Final Total' => number_format((float) $project->final_total, 2) . ' EGP',
-            'Paid Total' => number_format((float) $project->paid_total, 2) . ' EGP',
-            'Remaining' => number_format((float) $project->rest_total, 2) . ' EGP',
-            'Observation' => number_format((float) $project->observation, 2) . ' EGP',
+            'Final Total' => number_format((float) $project->final_total, 2) . ' IDR',
+            'Paid Total' => number_format((float) $project->paid_total, 2) . ' IDR',
+            'Remaining' => number_format((float) $project->rest_total, 2) . ' IDR',
+            'Observation' => number_format((float) $project->observation, 2) . ' IDR',
         ];
 
         foreach ($details as $label => $value) {

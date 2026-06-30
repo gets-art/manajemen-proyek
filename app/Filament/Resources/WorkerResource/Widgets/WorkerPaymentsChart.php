@@ -27,17 +27,19 @@ class WorkerPaymentsChart extends ChartWidget
     protected function getData(): array
     {
         $worker = $this->record;
+        $isSqlite = DB::getDriverName() === 'sqlite';
+        $periodSelector = $isSqlite ? "strftime('%Y-%m', created_at)" : "DATE_FORMAT(created_at, '%Y-%m')";
 
         $taskPayments = DB::table('task_workers')
             ->where('worker_id', $worker->id)
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as period, SUM(paid) as total")
-            ->groupByRaw("DATE_FORMAT(created_at, '%Y-%m')")
+            ->selectRaw("{$periodSelector} as period, SUM(paid) as total")
+            ->groupByRaw($periodSelector)
             ->pluck('total', 'period')
             ->toArray();
 
         $otherPayments = $worker->payments()
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as period, SUM(paid) as total")
-            ->groupByRaw("DATE_FORMAT(created_at, '%Y-%m')")
+            ->selectRaw("{$periodSelector} as period, SUM(paid) as total")
+            ->groupByRaw($periodSelector)
             ->pluck('total', 'period')
             ->toArray();
 
@@ -59,14 +61,14 @@ class WorkerPaymentsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.tasks_paid_egp'),
+                    'label' => __('app.widgets.tasks_paid_IDR'),
                     'data' => $tasksData,
                     'backgroundColor' => 'rgba(59, 130, 246, 0.5)',
                     'borderColor' => 'rgb(59, 130, 246)',
                     'borderWidth' => 2,
                 ],
                 [
-                    'label' => __('app.widgets.other_payments_egp'),
+                    'label' => __('app.widgets.other_payments_IDR'),
                     'data' => $paymentsData,
                     'backgroundColor' => 'rgba(245, 158, 11, 0.5)',
                     'borderColor' => 'rgb(245, 158, 11)',

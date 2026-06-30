@@ -12,9 +12,10 @@ return new class extends Migration
             $table->id();
             $table->longText('name');                    // translatable JSON
             $table->longText('description')->nullable(); // translatable JSON
-            $table->double('price');
+            $table->decimal('price', 15, 2);
             $table->integer('category_id');
             $table->string('image');
+            $table->integer('stock')->default(0);
             $table->boolean('active');
             $table->boolean('featured');
             $table->timestamps();

@@ -62,10 +62,10 @@ class TasksRelationManager extends RelationManager
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final_total')),
-                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_total')),
-                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.rest_total')),
-                        TextEntry::make('pivot.paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_amount')),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.final_total')),
+                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.paid_total')),
+                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.rest_total')),
+                        TextEntry::make('pivot.paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.paid_amount')),
                     ]),
             ]);
     }
@@ -77,7 +77,7 @@ class TasksRelationManager extends RelationManager
                 TextInput::make('paid')
                     ->required()
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->label(__('app.fields.paid_amount')),
             ]);
@@ -91,7 +91,7 @@ class TasksRelationManager extends RelationManager
                 TextColumn::make('name')->label(__('app.columns.task'))->searchable(),
                 TextColumn::make('project.name')->label(__('app.fields.project')),
                 TextColumn::make('category.name')->label(__('app.fields.category')),
-                TextColumn::make('pivot.paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid')),
+                TextColumn::make('pivot.paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.paid')),
                 TextColumn::make('start_date')->date()->label(__('app.columns.start')),
                 TextColumn::make('end_date')->date()->label(__('app.columns.end'))->placeholder('—'),
             ])
@@ -129,17 +129,17 @@ class TasksRelationManager extends RelationManager
                             ->afterOrEqual('start_date'),
                         TextInput::make('final_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0)
                             ->label(__('app.fields.final_total')),
                         TextInput::make('paid_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0)
                             ->label(__('app.fields.paid_total')),
                         TextInput::make('rest_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0)
                             ->label(__('app.fields.rest_total')),
                     ]),
@@ -150,7 +150,7 @@ class TasksRelationManager extends RelationManager
                         TextInput::make('paid')
                             ->required()
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->label(__('app.fields.paid_amount'))
                             ->default(0),
                     ]),

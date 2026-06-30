@@ -24,7 +24,7 @@ class ProductsTable
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('image')->circular(),
                 TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->sortable(),
+                TextColumn::make('price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->sortable(),
                 TextColumn::make('category.name')->sortable(),
                 IconColumn::make('active')->boolean(),
                 IconColumn::make('featured')->boolean(),

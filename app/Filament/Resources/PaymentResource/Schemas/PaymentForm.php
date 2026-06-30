@@ -48,7 +48,7 @@ class PaymentForm
                             ->required()
                             ->numeric()
                             ->minValue(0)
-                            ->prefix('EGP'),
+                            ->prefix('IDR'),
 
                         TextInput::make('payment_code')
                             ->label(__('app.fields.payment_code'))

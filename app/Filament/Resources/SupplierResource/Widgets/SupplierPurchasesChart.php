@@ -27,17 +27,20 @@ class SupplierPurchasesChart extends ChartWidget
     {
         $supplier = $this->record;
 
+        $driver = \Illuminate\Support\Facades\DB::getDriverName();
+        $monthQuery = $driver === 'sqlite' ? "CAST(strftime('%m', created_at) AS INTEGER)" : 'MONTH(created_at)';
+
         $purchases = $supplier->purchaseTasks()
-            ->selectRaw('MONTH(created_at) as month, SUM(total) as total')
+            ->selectRaw("$monthQuery as month, SUM(total) as total")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
         $payments = $supplier->payments()
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
+            ->selectRaw("$monthQuery as month, SUM(paid) as total")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
@@ -53,14 +56,14 @@ class SupplierPurchasesChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.purchases_egp'),
+                    'label' => __('app.widgets.purchases_IDR'),
                     'data' => $purchasesData,
                     'backgroundColor' => 'rgba(59, 130, 246, 0.5)',
                     'borderColor' => 'rgb(59, 130, 246)',
                     'borderWidth' => 2,
                 ],
                 [
-                    'label' => __('app.widgets.payments_egp'),
+                    'label' => __('app.widgets.payments_IDR'),
                     'data' => $paymentsData,
                     'backgroundColor' => 'rgba(34, 197, 94, 0.5)',
                     'borderColor' => 'rgb(34, 197, 94)',

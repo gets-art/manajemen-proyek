@@ -18,6 +18,11 @@ class User extends Authenticatable implements FilamentUser
         return true;
     }
 
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
     protected $fillable = [
         'name',
         'email',

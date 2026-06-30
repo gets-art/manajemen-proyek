@@ -26,27 +26,30 @@ class MonthlyRevenueChart extends ChartWidget
     {
         $year = now()->year;
 
+        $driver = DB::getDriverName();
+        $monthQuery = $driver === 'sqlite' ? "CAST(strftime('%m', created_at) AS INTEGER)" : 'MONTH(created_at)';
+
         $incomeByMonth = DB::table('payments')
-            ->selectRaw('MONTH(created_at) as month, COALESCE(SUM(paid), 0) as total')
+            ->selectRaw("$monthQuery as month, COALESCE(SUM(paid), 0) as total")
             ->where('paymentable_type', \App\Models\Project::class)
             ->whereNull('deleted_at')
             ->whereYear('created_at', $year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month');
 
         $expensePaymentsByMonth = DB::table('payments')
-            ->selectRaw('MONTH(created_at) as month, COALESCE(SUM(paid), 0) as total')
+            ->selectRaw("$monthQuery as month, COALESCE(SUM(paid), 0) as total")
             ->where('paymentable_type', '!=', \App\Models\Project::class)
             ->whereNull('deleted_at')
             ->whereYear('created_at', $year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month');
 
         $systemExpensesByMonth = DB::table('expenses')
-            ->selectRaw('MONTH(created_at) as month, COALESCE(SUM(value), 0) as total')
+            ->selectRaw("$monthQuery as month, COALESCE(SUM(value), 0) as total")
             ->whereNull('deleted_at')
             ->whereYear('created_at', $year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month');
 
         $incomeData = [];

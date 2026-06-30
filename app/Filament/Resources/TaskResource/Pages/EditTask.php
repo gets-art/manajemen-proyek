@@ -9,6 +9,11 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditTask extends EditRecord
 {
+    #[\Livewire\Attributes\On('refresh-form')]
+    public function refreshForm(): void
+    {
+        $this->fillForm();
+    }
     protected static string $resource = TaskResource::class;
 
     protected function getHeaderActions(): array

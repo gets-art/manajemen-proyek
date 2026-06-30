@@ -17,12 +17,13 @@ class Payment extends Model
         'paymentable_type',
         'paymentable_id',
         'payment_code',
+        'notes',
     ];
 
     protected function casts(): array
     {
         return [
-            'paid' => 'double',
+            'paid' => 'decimal:2',
         ];
     }
 

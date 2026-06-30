@@ -22,10 +22,10 @@ class PurchaseTask extends Model
     {
         return [
             'quantity' => 'integer',
-            'unit_price' => 'double',
-            'total' => 'double',
-            'discount' => 'double',
-            'final_total' => 'double',
+            'unit_price' => 'decimal:2',
+            'total' => 'decimal:2',
+            'discount' => 'decimal:2',
+            'final_total' => 'decimal:2',
         ];
     }
 

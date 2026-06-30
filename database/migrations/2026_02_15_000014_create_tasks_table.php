@@ -14,11 +14,13 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
             $table->longText('name');                    // translatable JSON
             $table->longText('description')->nullable(); // translatable JSON
-            $table->double('final_total')->nullable();
-            $table->double('rest_total')->nullable();
-            $table->double('paid_total')->nullable();
-            $table->string('start_date');
-            $table->string('end_date')->nullable();
+            $table->decimal('final_total', 15, 2)->nullable();
+            $table->decimal('rest_total', 15, 2)->nullable();
+            $table->decimal('paid_total', 15, 2)->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
+            $table->string('status')->default('Pending');
+            $table->integer('progress_percentage')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

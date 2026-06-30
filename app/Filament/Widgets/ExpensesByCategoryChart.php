@@ -25,10 +25,10 @@ class ExpensesByCategoryChart extends ChartWidget
         $categories = ExpenseCategory::query()
             ->select('name')
             ->withSum('expenses', 'value')
-            ->having('expenses_sum_value', '>', 0)
-            ->orderByDesc('expenses_sum_value')
-            ->limit(10)
-            ->get();
+            ->get()
+            ->filter(fn ($category) => $category->expenses_sum_value > 0)
+            ->sortByDesc('expenses_sum_value')
+            ->take(10);
 
         $colors = [
             'rgba(239, 68, 68, 0.7)',

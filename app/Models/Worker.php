@@ -14,8 +14,12 @@ class Worker extends Model
     protected $fillable = [
         'name',
         'phone_number',
-        'image',
         'active',
+        'image',
+        'type',
+        'daily_rate',
+        'mandor_id',
+        'position',
     ];
 
     protected function casts(): array
@@ -35,5 +39,25 @@ class Worker extends Model
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'paymentable');
+    }
+
+    public function attendances(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Attendance::class, AttendanceWorker::class, 'worker_id', 'id', 'id', 'attendance_id');
+    }
+
+    public function attendanceWorkers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(AttendanceWorker::class);
+    }
+
+    public function mandor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Worker::class, 'mandor_id');
+    }
+
+    public function teamMembers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Worker::class, 'mandor_id');
     }
 }

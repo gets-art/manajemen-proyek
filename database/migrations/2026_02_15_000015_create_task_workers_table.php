@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->integer('task_id');
             $table->integer('worker_id');
-            $table->double('paid');
+            $table->decimal('paid', 15, 2);
             $table->timestamps();
         });
     }

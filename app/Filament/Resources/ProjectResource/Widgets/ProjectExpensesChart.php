@@ -36,7 +36,7 @@ class ProjectExpensesChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.expenses_egp'),
+                    'label' => __('app.widgets.expenses_IDR'),
                     'data' => array_values($expenses),
                     'backgroundColor' => 'rgba(239, 68, 68, 0.5)',
                     'borderColor' => 'rgb(239, 68, 68)',

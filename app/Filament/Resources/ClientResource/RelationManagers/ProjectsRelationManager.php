@@ -60,9 +60,9 @@ class ProjectsRelationManager extends RelationManager
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final_total')),
-                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_total')),
-                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.rest_total')),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.final_total')),
+                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.paid_total')),
+                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.rest_total')),
                     ]),
             ]);
     }
@@ -101,17 +101,17 @@ class ProjectsRelationManager extends RelationManager
                 TextInput::make('final_total')
                     ->label(__('app.fields.final_total'))
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
                 TextInput::make('paid_total')
                     ->label(__('app.fields.paid_total'))
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
                 TextInput::make('rest_total')
                     ->label(__('app.fields.rest_total'))
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
                 Textarea::make('description')
                     ->label(__('app.fields.description'))
@@ -143,9 +143,9 @@ class ProjectsRelationManager extends RelationManager
                         3 => 'danger',
                         default => 'gray',
                     }),
-                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.total')),
-                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.paid')),
-                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.columns.rest')),
+                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.total')),
+                TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.paid')),
+                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.rest')),
                 TextColumn::make('start_date'),
             ])
             ->recordActions([

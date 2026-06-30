@@ -61,9 +61,9 @@ class TasksRelationManager extends RelationManager
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final_total')),
-                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.paid_total')),
-                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.rest_total')),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.final_total')),
+                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.paid_total')),
+                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.rest_total')),
                     ]),
             ]);
     }
@@ -89,15 +89,15 @@ class TasksRelationManager extends RelationManager
                     ->afterOrEqual('start_date'),
                 TextInput::make('final_total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
                 TextInput::make('paid_total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
                 TextInput::make('rest_total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0),
             ]);
     }
@@ -110,17 +110,17 @@ class TasksRelationManager extends RelationManager
                 TextColumn::make('name')->searchable()->sortable()->limit(30),
                 TextColumn::make('category.name')->label(__('app.fields.category'))->placeholder('—'),
                 TextColumn::make('final_total')
-                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')
                     ->label(__('app.fields.final_total'))
-                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.total'))),
+                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.total'))),
                 TextColumn::make('paid_total')
-                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')
                     ->label(__('app.fields.paid_total'))
-                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.total'))),
+                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.total'))),
                 TextColumn::make('rest_total')
-                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')
+                    ->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')
                     ->label(__('app.fields.rest_total'))
-                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.total'))),
+                    ->summarize(Sum::make()->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.total'))),
                 TextColumn::make('start_date')->date()->label(__('app.fields.start_date')),
                 TextColumn::make('end_date')->date()->label(__('app.fields.end_date')),
             ])
@@ -149,15 +149,15 @@ class TasksRelationManager extends RelationManager
                             ->afterOrEqual('start_date'),
                         TextInput::make('final_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0),
                         TextInput::make('paid_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0),
                         TextInput::make('rest_total')
                             ->numeric()
-                            ->prefix('EGP')
+                            ->prefix('IDR')
                             ->default(0),
                     ]),
             ]);

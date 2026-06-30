@@ -19,6 +19,7 @@ class Product extends Model
         'price',
         'category_id',
         'image',
+        'stock',
         'active',
         'featured',
     ];
@@ -26,7 +27,7 @@ class Product extends Model
     protected function casts(): array
     {
         return [
-            'price' => 'double',
+            'price' => 'decimal:2',
             'active' => 'boolean',
             'featured' => 'boolean',
         ];

@@ -12,8 +12,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->double('value');
-            $table->string('date');
+            $table->decimal('value', 15, 2);
+            $table->date('date');
             $table->integer('added_by');
             $table->integer('last_edit_by');
             $table->integer('expense_category_id');

@@ -26,14 +26,23 @@ class Task extends Model
         'paid_total',
         'start_date',
         'end_date',
+        'status',
+        'progress_percentage',
     ];
+
+    protected static function booted()
+    {
+        static::saving(function ($task) {
+            $task->rest_total = $task->final_total - $task->paid_total;
+        });
+    }
 
     protected function casts(): array
     {
         return [
-            'final_total' => 'double',
-            'rest_total' => 'double',
-            'paid_total' => 'double',
+            'final_total' => 'decimal:2',
+            'rest_total' => 'decimal:2',
+            'paid_total' => 'decimal:2',
             'start_date' => 'date',
             'end_date' => 'date',
         ];
@@ -64,5 +73,15 @@ class Task extends Model
     public function images(): MorphMany
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function documents(): MorphMany
+    {
+        return $this->morphMany(Document::class, 'documentable');
+    }
+
+    public function payments(): MorphMany
+    {
+        return $this->morphMany(Payment::class, 'paymentable');
     }
 }

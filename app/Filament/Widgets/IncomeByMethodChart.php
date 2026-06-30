@@ -25,9 +25,10 @@ class IncomeByMethodChart extends ChartWidget
         $methods = PaymentMethod::query()
             ->select('name')
             ->withSum('payments', 'paid')
-            ->having('payments_sum_paid', '>', 0)
-            ->orderByDesc('payments_sum_paid')
-            ->get();
+            ->get()
+            ->filter(fn ($method) => $method->payments_sum_paid > 0)
+            ->sortByDesc('payments_sum_paid')
+            ->take(10);
 
         $bgColors = [
             'rgba(34, 197, 94, 0.6)',

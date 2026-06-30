@@ -36,19 +36,19 @@ class AllClientsStatsOverview extends StatsOverviewWidget
                 ->chart([4, 6, 5, 7, 8, 6, 9])
                 ->color('info'),
 
-            Stat::make(__('app.widgets.total_value'), number_format($totalValue, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_value'), number_format($totalValue, 2) . ' IDR')
                 ->description(__('app.widgets.all_projects_combined'))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->chart([5, 7, 6, 8, 9, 7, 10])
                 ->color('warning'),
 
-            Stat::make(__('app.widgets.total_paid'), number_format($totalPaid, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_paid'), number_format($totalPaid, 2) . ' IDR')
                 ->description(__('app.widgets.amount_collected'))
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->chart([3, 5, 4, 6, 7, 5, 8])
                 ->color('success'),
 
-            Stat::make(__('app.widgets.outstanding'), number_format($totalRest, 2) . ' EGP')
+            Stat::make(__('app.widgets.outstanding'), number_format($totalRest, 2) . ' IDR')
                 ->description($totalRest > 0 ? __('app.widgets.needs_collection') : __('app.widgets.all_settled'))
                 ->descriptionIcon($totalRest > 0 ? 'heroicon-m-exclamation-triangle' : 'heroicon-m-check-badge')
                 ->chart([6, 5, 4, 3, 4, 3, 2])

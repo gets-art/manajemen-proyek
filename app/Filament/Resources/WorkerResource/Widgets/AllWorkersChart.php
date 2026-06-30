@@ -24,18 +24,21 @@ class AllWorkersChart extends ChartWidget
 
     protected function getData(): array
     {
+        $driver = \Illuminate\Support\Facades\DB::getDriverName();
+        $monthQuery = $driver === 'sqlite' ? "CAST(strftime('%m', created_at) AS INTEGER)" : 'MONTH(created_at)';
+
         $taskPayments = DB::table('task_workers')
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
+            ->selectRaw("$monthQuery as month, SUM(paid) as total")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
         $otherPayments = DB::table('payments')
             ->where('paymentable_type', 'App\\Models\\Worker')
-            ->selectRaw('MONTH(created_at) as month, SUM(paid) as total')
+            ->selectRaw("$monthQuery as month, SUM(paid) as total")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->pluck('total', 'month')
             ->toArray();
 
@@ -51,7 +54,7 @@ class AllWorkersChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.tasks_paid_egp'),
+                    'label' => __('app.widgets.tasks_paid_IDR'),
                     'data' => $tasksData,
                     'borderColor' => 'rgb(59, 130, 246)',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
@@ -59,7 +62,7 @@ class AllWorkersChart extends ChartWidget
                     'tension' => 0.4,
                 ],
                 [
-                    'label' => __('app.widgets.other_payments_egp'),
+                    'label' => __('app.widgets.other_payments_IDR'),
                     'data' => $paymentsData,
                     'borderColor' => 'rgb(245, 158, 11)',
                     'backgroundColor' => 'rgba(245, 158, 11, 0.1)',

@@ -34,18 +34,18 @@ class PurchaseTasksStatsWidget extends StatsOverviewWidget
                 ->chart([2, 3, 5, 4, 6, 3, 5])
                 ->color('primary'),
 
-            Stat::make(__('app.widgets.total_value'), number_format($stats->total_amount, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_value'), number_format($stats->total_amount, 2) . ' IDR')
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->chart([7, 3, 4, 5, 6, 3, 5])
                 ->color('warning'),
 
-            Stat::make(__('app.fields.discount'), number_format($stats->total_discount, 2) . ' EGP')
+            Stat::make(__('app.fields.discount'), number_format($stats->total_discount, 2) . ' IDR')
                 ->description(__('app.widgets.total_purchase_value'))
                 ->descriptionIcon('heroicon-m-receipt-percent')
                 ->chart([3, 5, 6, 7, 4, 5, 8])
                 ->color('info'),
 
-            Stat::make(__('app.widgets.final_total'), number_format($stats->total_final, 2) . ' EGP')
+            Stat::make(__('app.widgets.final_total'), number_format($stats->total_final, 2) . ' IDR')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->chart([5, 4, 6, 3, 7, 5, 2])
                 ->color('success'),

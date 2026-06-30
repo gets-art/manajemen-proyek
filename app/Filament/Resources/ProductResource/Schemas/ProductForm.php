@@ -33,7 +33,7 @@ class ProductForm
                             ->label(__('app.fields.price'))
                             ->required()
                             ->numeric()
-                            ->prefix('EGP'),
+                            ->prefix('IDR'),
 
                         Select::make('category_id')
                             ->label(__('app.fields.category'))

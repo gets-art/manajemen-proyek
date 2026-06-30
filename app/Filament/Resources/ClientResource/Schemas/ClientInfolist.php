@@ -20,6 +20,8 @@ class ClientInfolist
                         TextEntry::make('name'),
                         TextEntry::make('email')->placeholder('—'),
                         TextEntry::make('phone'),
+                        TextEntry::make('address')->label('Alamat')->columnSpanFull()->placeholder('—'),
+                        TextEntry::make('branch.name')->label('Cabang')->placeholder('—'),
                         TextEntry::make('notes')->columnSpanFull()->placeholder('—'),
                         TextEntry::make('projects_count')->state(fn ($record) => $record->projects()->count())->label(__('app.columns.projects')),
                         TextEntry::make('created_at')->dateTime(),

@@ -18,12 +18,34 @@ class WorkersTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (\Illuminate\Database\Eloquent\Builder $query) => $query->whereNull('mandor_id'))
             ->columns([
                 TextColumn::make('id')->sortable(),
                 ImageColumn::make('image')->circular(),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('phone_number')->searchable(),
+                TextColumn::make('type')
+                    ->label(__('app.fields.worker_type'))
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'borongan' => 'success',
+                        'harian' => 'warning',
+                        default => 'gray',
+                    }),
+                TextColumn::make('daily_rate')
+                    ->label(__('app.fields.daily_rate'))
+                    ->numeric()
+                    ->money('IDR')
+                    ->toggleable(),
                 IconColumn::make('active')->boolean(),
+                TextColumn::make('teamMembers.name')
+                    ->label('Anggota Tim')
+                    ->badge()
+                    ->listWithLineBreaks()
+                    ->limitList(1)
+                    ->expandableLimitedList()
+                    ->color('info')
+                    ->toggleable(),
                 TextColumn::make('tasks_count')->counts('tasks')->label(__('app.columns.tasks')),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])

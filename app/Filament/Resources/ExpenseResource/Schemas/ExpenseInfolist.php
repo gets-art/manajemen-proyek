@@ -18,7 +18,7 @@ class ExpenseInfolist
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('name'),
-                        TextEntry::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
                         TextEntry::make('date'),
                         TextEntry::make('expenseCategory.name')->label(__('app.fields.category')),
                         TextEntry::make('project.name')->label(__('app.fields.project'))->placeholder('—'),

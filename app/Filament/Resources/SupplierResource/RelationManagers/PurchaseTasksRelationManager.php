@@ -51,10 +51,10 @@ class PurchaseTasksRelationManager extends RelationManager
                         TextEntry::make('task.name')->label(__('app.columns.task')),
                         TextEntry::make('product.name')->label(__('app.fields.product'))->placeholder('—'),
                         TextEntry::make('quantity'),
-                        TextEntry::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
                     ]),
             ]);
     }
@@ -85,23 +85,23 @@ class PurchaseTasksRelationManager extends RelationManager
                     ->numeric()
                     ->minValue(0)
                     ->default(0)
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->live()
                     ->afterStateUpdated(fn ($state, callable $set, callable $get) => self::updateTotals($set, $get)),
                 TextInput::make('total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->readOnly(),
                 TextInput::make('discount')
                     ->numeric()
                     ->minValue(0)
                     ->default(0)
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->live()
                     ->afterStateUpdated(fn ($state, callable $set, callable $get) => self::updateTotals($set, $get)),
                 TextInput::make('final_total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->readOnly(),
             ]);
     }
@@ -125,10 +125,10 @@ class PurchaseTasksRelationManager extends RelationManager
                 TextColumn::make('task.name')->label(__('app.columns.task'))->searchable(),
                 TextColumn::make('product.name')->label(__('app.fields.product')),
                 TextColumn::make('quantity'),
-                TextColumn::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                TextColumn::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                TextColumn::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                TextColumn::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                TextColumn::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                TextColumn::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
             ])
             ->recordActions([
                 Actions\ViewAction::make(),

@@ -32,14 +32,14 @@ class AllClientsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.total_value_egp'),
+                    'label' => __('app.widgets.total_value_IDR'),
                     'data' => $clients->pluck('projects_sum_final_total')->map(fn ($v) => $v ?? 0)->toArray(),
                     'backgroundColor' => 'rgba(59, 130, 246, 0.7)',
                     'borderColor' => 'rgb(59, 130, 246)',
                     'borderWidth' => 1,
                 ],
                 [
-                    'label' => __('app.widgets.paid_egp'),
+                    'label' => __('app.widgets.paid_IDR'),
                     'data' => $clients->pluck('projects_sum_paid_total')->map(fn ($v) => $v ?? 0)->toArray(),
                     'backgroundColor' => 'rgba(16, 185, 129, 0.7)',
                     'borderColor' => 'rgb(16, 185, 129)',

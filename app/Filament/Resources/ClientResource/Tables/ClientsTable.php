@@ -19,8 +19,10 @@ class ClientsTable
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('email')->searchable(),
+                TextColumn::make('email')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('phone')->searchable(),
+                TextColumn::make('branch.name')->label('Cabang')->searchable()->sortable(),
+                TextColumn::make('address')->label('Alamat')->limit(30)->searchable()->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('projects_count')->counts('projects')->label(__('app.columns.projects')),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
             ])

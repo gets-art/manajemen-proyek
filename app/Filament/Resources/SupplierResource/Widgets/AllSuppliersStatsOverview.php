@@ -38,19 +38,19 @@ class AllSuppliersStatsOverview extends StatsOverviewWidget
                 ->chart([4, 5, 6, 5, 7, 6, 8])
                 ->color('success'),
 
-            Stat::make(__('app.widgets.total_purchases'), number_format($totalPurchases, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_purchases'), number_format($totalPurchases, 2) . ' IDR')
                 ->description(__('app.widgets.all_purchase_orders'))
                 ->descriptionIcon('heroicon-m-shopping-cart')
                 ->chart([5, 7, 6, 8, 9, 7, 10])
                 ->color('info'),
 
-            Stat::make(__('app.widgets.total_paid'), number_format($totalPayments, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_paid'), number_format($totalPayments, 2) . ' IDR')
                 ->description(__('app.widgets.payments_to_suppliers'))
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 ->chart([3, 5, 4, 6, 7, 5, 8])
                 ->color('warning'),
 
-            Stat::make(__('app.widgets.outstanding_balance'), number_format($balance, 2) . ' EGP')
+            Stat::make(__('app.widgets.outstanding_balance'), number_format($balance, 2) . ' IDR')
                 ->description($balance > 0 ? __('app.widgets.total_owed') : __('app.widgets.all_settled'))
                 ->descriptionIcon($balance > 0 ? 'heroicon-m-exclamation-triangle' : 'heroicon-m-check-badge')
                 ->chart([6, 5, 4, 3, 4, 3, 2])

@@ -25,10 +25,10 @@ class TasksByCategoryChart extends ChartWidget
         $categories = Category::query()
             ->select('name')
             ->withCount('tasks')
-            ->having('tasks_count', '>', 0)
-            ->orderByDesc('tasks_count')
-            ->limit(10)
-            ->get();
+            ->get()
+            ->filter(fn ($cat) => $cat->tasks_count > 0)
+            ->sortByDesc('tasks_count')
+            ->take(10);
 
         $bgColors = [
             'rgba(59, 130, 246, 0.6)',

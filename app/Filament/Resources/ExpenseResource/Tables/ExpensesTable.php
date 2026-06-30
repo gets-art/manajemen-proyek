@@ -21,7 +21,7 @@ class ExpensesTable
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->searchable()->sortable(),
-                TextColumn::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->sortable(),
+                TextColumn::make('value')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->sortable(),
                 TextColumn::make('date')->date()->sortable(),
                 TextColumn::make('expenseCategory.name')->label(__('app.fields.category'))->sortable(),
                 TextColumn::make('project.name')->label(__('app.fields.project'))->placeholder('—')->sortable(),

@@ -31,8 +31,9 @@ class PaymentsRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->schema([
                         TextEntry::make('paymentMethod.name')->label(__('app.fields.payment_method')),
-                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.amount')),
                         TextEntry::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
+                        TextEntry::make('notes')->label('Catatan')->placeholder('—')->columnSpanFull(),
                         TextEntry::make('created_at')->dateTime(),
                     ]),
             ]);
@@ -50,10 +51,15 @@ class PaymentsRelationManager extends RelationManager
                 TextInput::make('paid')
                     ->required()
                     ->numeric()
-                    ->prefix('EGP')
+                    ->mask(\Filament\Support\RawJs::make('$money($input)'))
+                    ->stripCharacters(',')
+                    ->prefix('IDR')
                     ->label(__('app.fields.amount')),
                 TextInput::make('payment_code')
                     ->maxLength(255),
+                \Filament\Forms\Components\Textarea::make('notes')
+                    ->label('Catatan')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -63,17 +69,18 @@ class PaymentsRelationManager extends RelationManager
             ->modifyQueryUsing(fn ($query) => $query->with('paymentMethod'))
             ->columns([
                 TextColumn::make('paymentMethod.name')->label(__('app.fields.method')),
-                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.amount')),
                 TextColumn::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
+                TextColumn::make('notes')->label('Catatan')->limit(30)->placeholder('—'),
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])
             ->recordActions([
                 Actions\ViewAction::make(),
-                Actions\EditAction::make(),
-                Actions\DeleteAction::make(),
+                Actions\EditAction::make()->after(function ($livewire) { $livewire->dispatch('refresh-form'); }),
+                Actions\DeleteAction::make()->after(function ($livewire) { $livewire->dispatch('refresh-form'); }),
             ])
             ->headerActions([
-                Actions\CreateAction::make(),
+                Actions\CreateAction::make()->after(function ($livewire) { $livewire->dispatch('refresh-form'); }),
             ]);
     }
 }

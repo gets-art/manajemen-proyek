@@ -55,19 +55,19 @@ class StatsOverview extends StatsOverviewWidget
                 ->chart([5, 3, 7, 4, 6, 8, 5])
                 ->color('primary'),
 
-            Stat::make(__('app.widgets.total_income'), number_format($stats->project_income, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_income'), number_format($stats->project_income, 2) . ' IDR')
                 ->description(__('app.widgets.all_payments_combined'))
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->chart([3, 5, 6, 7, 4, 8, 10])
                 ->color('success'),
 
-            Stat::make(__('app.widgets.total_expenses'), number_format($totalExpenses, 2) . ' EGP')
+            Stat::make(__('app.widgets.total_expenses'), number_format($totalExpenses, 2) . ' IDR')
                 ->description(__('app.widgets.total_expenses_desc'))
                 ->descriptionIcon('heroicon-m-arrow-trending-down')
                 ->chart([6, 5, 4, 7, 5, 3, 4])
                 ->color('danger'),
 
-            Stat::make(__('app.widgets.net_profit'), number_format($netProfit, 2) . ' EGP')
+            Stat::make(__('app.widgets.net_profit'), number_format($netProfit, 2) . ' IDR')
                 ->description($netProfit >= 0 ? __('app.widgets.all_settled') : __('app.widgets.outstanding_balance'))
                 ->descriptionIcon($netProfit >= 0 ? 'heroicon-m-check-circle' : 'heroicon-m-exclamation-triangle')
                 ->chart([4, 6, 5, 8, 7, 9, 11])

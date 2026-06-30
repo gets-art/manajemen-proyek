@@ -29,7 +29,7 @@ class PaymentInfolist
                             }),
                         TextEntry::make('paymentable.name')->label(__('app.fields.paid_to')),
                         TextEntry::make('paymentMethod.name')->label(__('app.fields.payment_method')),
-                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.amount')),
                         TextEntry::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
                         TextEntry::make('created_at')->dateTime(),
                     ]),

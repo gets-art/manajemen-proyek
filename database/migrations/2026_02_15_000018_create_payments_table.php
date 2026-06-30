@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->integer('payment_method_id');
-            $table->double('paid');
+            $table->decimal('paid', 15, 2);
             $table->string('paymentable_type');
             $table->integer('paymentable_id');
             $table->string('payment_code')->nullable();

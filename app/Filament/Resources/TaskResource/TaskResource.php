@@ -46,6 +46,7 @@ class TaskResource extends Resource
         return [
             WorkersRelationManager::class,
             PurchaseTasksRelationManager::class,
+            \App\Filament\RelationManagers\PaymentsRelationManager::class,
             ImagesRelationManager::class,
         ];
     }

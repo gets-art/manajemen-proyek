@@ -24,19 +24,19 @@
         <x-filament::section>
             <div class="text-center">
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('app.reports.clients.total_value') }}</p>
-                <p class="text-2xl font-bold text-warning-600 dark:text-warning-400">{{ number_format($data['grandFinal'], 2) }} EGP</p>
+                <p class="text-2xl font-bold text-warning-600 dark:text-warning-400">{{ number_format($data['grandFinal'], 2) }} IDR</p>
             </div>
         </x-filament::section>
         <x-filament::section>
             <div class="text-center">
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('app.reports.clients.total_paid') }}</p>
-                <p class="text-2xl font-bold text-success-600 dark:text-success-400">{{ number_format($data['grandPaid'], 2) }} EGP</p>
+                <p class="text-2xl font-bold text-success-600 dark:text-success-400">{{ number_format($data['grandPaid'], 2) }} IDR</p>
             </div>
         </x-filament::section>
         <x-filament::section>
             <div class="text-center">
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('app.reports.clients.outstanding') }}</p>
-                <p class="text-2xl font-bold {{ $data['grandRest'] > 0 ? 'text-danger-600 dark:text-danger-400' : 'text-success-600 dark:text-success-400' }}">{{ number_format($data['grandRest'], 2) }} EGP</p>
+                <p class="text-2xl font-bold {{ $data['grandRest'] > 0 ? 'text-danger-600 dark:text-danger-400' : 'text-success-600 dark:text-success-400' }}">{{ number_format($data['grandRest'], 2) }} IDR</p>
             </div>
         </x-filament::section>
     </div>
@@ -51,9 +51,9 @@
                         <th class="text-start p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.client') }}</th>
                         <th class="text-start p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.phone') }}</th>
                         <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.projects') }}</th>
-                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.total_egp') }}</th>
-                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.paid_egp') }}</th>
-                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.rest_egp') }}</th>
+                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.total_IDR') }}</th>
+                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.paid_IDR') }}</th>
+                        <th class="text-end p-3 font-semibold text-gray-600 dark:text-gray-300">{{ __('app.reports.clients.rest_IDR') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-white/10">

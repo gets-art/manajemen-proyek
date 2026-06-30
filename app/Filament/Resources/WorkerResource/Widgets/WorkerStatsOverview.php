@@ -30,19 +30,19 @@ class WorkerStatsOverview extends StatsOverviewWidget
                 ->chart([2, 3, 5, 4, 6, 3, 5])
                 ->color('primary'),
 
-            Stat::make(__('app.widgets.tasks_paid'), number_format($tasksPaid, 2) . ' EGP')
+            Stat::make(__('app.widgets.tasks_paid'), number_format($tasksPaid, 2) . ' IDR')
                 ->description(__('app.widgets.from_task_assignments'))
                 ->descriptionIcon('heroicon-m-banknotes')
                 ->chart([3, 5, 4, 6, 7, 5, 8])
                 ->color('info'),
 
-            Stat::make(__('app.widgets.other_payments'), number_format($paymentsTotal, 2) . ' EGP')
+            Stat::make(__('app.widgets.other_payments'), number_format($paymentsTotal, 2) . ' IDR')
                 ->description(__('app.widgets.direct_payments'))
                 ->descriptionIcon('heroicon-m-currency-dollar')
                 ->chart([4, 3, 5, 6, 4, 5, 7])
                 ->color('warning'),
 
-            Stat::make(__('app.widgets.grand_total'), number_format($grandTotal, 2) . ' EGP')
+            Stat::make(__('app.widgets.grand_total'), number_format($grandTotal, 2) . ' IDR')
                 ->description(__('app.widgets.all_payments_combined'))
                 ->descriptionIcon('heroicon-m-calculator')
                 ->chart([5, 7, 6, 8, 9, 7, 10])

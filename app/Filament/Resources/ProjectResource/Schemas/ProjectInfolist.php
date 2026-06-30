@@ -48,10 +48,10 @@ class ProjectInfolist
                     ->columns(4)
                     ->columnSpanFull()
                     ->schema([
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('observation')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('observation')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
                     ]),
 
                 Section::make(__('app.sections.notes'))

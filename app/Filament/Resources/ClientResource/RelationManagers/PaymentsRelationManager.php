@@ -41,7 +41,7 @@ class PaymentsRelationManager extends RelationManager
                     ->schema([
                         TextEntry::make('paymentable.name')->label(__('app.fields.project')),
                         TextEntry::make('paymentMethod.name')->label(__('app.fields.method')),
-                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                        TextEntry::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.amount')),
                         TextEntry::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
                         TextEntry::make('created_at')->dateTime(),
                     ]),
@@ -80,7 +80,7 @@ class PaymentsRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('paymentable.name')->label(__('app.fields.project')),
                 TextColumn::make('paymentMethod.name')->label(__('app.fields.method')),
-                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.amount')),
+                TextColumn::make('paid')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.amount')),
                 TextColumn::make('payment_code')->label(__('app.fields.code'))->placeholder('—'),
                 TextColumn::make('created_at')->dateTime()->sortable(),
             ])

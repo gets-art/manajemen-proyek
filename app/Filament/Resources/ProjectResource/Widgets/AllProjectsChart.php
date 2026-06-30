@@ -24,9 +24,12 @@ class AllProjectsChart extends ChartWidget
 
     protected function getData(): array
     {
-        $payments = Project::selectRaw('MONTH(created_at) as month, SUM(final_total) as value, SUM(paid_total) as paid')
+        $driver = \Illuminate\Support\Facades\DB::getDriverName();
+        $monthQuery = $driver === 'sqlite' ? "CAST(strftime('%m', created_at) AS INTEGER)" : 'MONTH(created_at)';
+
+        $payments = Project::selectRaw("$monthQuery as month, SUM(final_total) as value, SUM(paid_total) as paid")
             ->whereYear('created_at', now()->year)
-            ->groupByRaw('MONTH(created_at)')
+            ->groupByRaw($monthQuery)
             ->get()
             ->keyBy('month');
 
@@ -42,7 +45,7 @@ class AllProjectsChart extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => __('app.widgets.total_value_egp'),
+                    'label' => __('app.widgets.total_value_IDR'),
                     'data' => $valueData,
                     'borderColor' => 'rgb(59, 130, 246)',
                     'backgroundColor' => 'rgba(59, 130, 246, 0.1)',
@@ -50,7 +53,7 @@ class AllProjectsChart extends ChartWidget
                     'tension' => 0.4,
                 ],
                 [
-                    'label' => __('app.widgets.total_paid_egp'),
+                    'label' => __('app.widgets.total_paid_IDR'),
                     'data' => $paidData,
                     'borderColor' => 'rgb(16, 185, 129)',
                     'backgroundColor' => 'rgba(16, 185, 129, 0.1)',

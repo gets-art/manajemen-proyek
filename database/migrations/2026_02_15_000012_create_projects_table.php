@@ -14,13 +14,13 @@ return new class extends Migration
             $table->longText('description')->nullable(); // translatable JSON
             $table->integer('client_id');
             $table->integer('category_id');
-            $table->string('start_date');
-            $table->string('end_date')->nullable();
+            $table->date('start_date');
+            $table->date('end_date')->nullable();
             $table->integer('status');
-            $table->double('final_total')->nullable();
-            $table->double('paid_total')->nullable();
-            $table->double('rest_total')->nullable();
-            $table->double('observation')->nullable();
+            $table->decimal('final_total', 15, 2)->nullable();
+            $table->decimal('paid_total', 15, 2)->nullable();
+            $table->decimal('rest_total', 15, 2)->nullable();
+            $table->decimal('observation', 15, 2)->nullable();
             $table->string('image')->nullable();
             $table->text('note')->nullable();
             $table->timestamps();

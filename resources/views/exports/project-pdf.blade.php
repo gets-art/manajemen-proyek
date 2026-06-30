@@ -67,15 +67,15 @@
             </tr>
             <tr>
                 <td>Final Total</td>
-                <td>{{ number_format((float) $project->final_total, 2) }} EGP</td>
+                <td>{{ number_format((float) $project->final_total, 2) }} IDR</td>
             </tr>
             <tr>
                 <td>Paid Total</td>
-                <td>{{ number_format((float) $project->paid_total, 2) }} EGP</td>
+                <td>{{ number_format((float) $project->paid_total, 2) }} IDR</td>
             </tr>
             <tr>
                 <td>Remaining</td>
-                <td>{{ number_format((float) $project->rest_total, 2) }} EGP</td>
+                <td>{{ number_format((float) $project->rest_total, 2) }} IDR</td>
             </tr>
         </table>
     </div>
@@ -150,7 +150,7 @@
                 @endforeach
                 <tr class="total-row">
                     <td colspan="4" class="text-right">Total</td>
-                    <td class="text-right">{{ number_format($project->expenses->sum('value'), 2) }} EGP</td>
+                    <td class="text-right">{{ number_format($project->expenses->sum('value'), 2) }} IDR</td>
                     <td></td>
                 </tr>
             </tbody>
@@ -184,7 +184,7 @@
                 @endforeach
                 <tr class="total-row">
                     <td class="text-right">Total</td>
-                    <td class="text-right">{{ number_format($project->payments->sum('paid'), 2) }} EGP</td>
+                    <td class="text-right">{{ number_format($project->payments->sum('paid'), 2) }} IDR</td>
                     <td colspan="3"></td>
                 </tr>
             </tbody>

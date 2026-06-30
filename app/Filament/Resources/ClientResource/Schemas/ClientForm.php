@@ -34,6 +34,28 @@ class ClientForm
                             ->tel()
                             ->maxLength(255),
 
+                        Textarea::make('address')
+                            ->label('Alamat')
+                            ->rows(3)
+                            ->columnSpanFull(),
+
+                        \Filament\Forms\Components\Select::make('branch_id')
+                            ->label('Cabang')
+                            ->relationship('branch', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->createOptionForm([
+                                \Filament\Forms\Components\TextInput::make('name')
+                                    ->label('Nama Cabang')
+                                    ->required()
+                                    ->maxLength(255),
+                                \Filament\Forms\Components\Textarea::make('address')
+                                    ->label('Alamat Cabang')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+                            ])
+                            ->columnSpanFull(),
+
                         Textarea::make('notes')
                             ->label(__('app.fields.notes'))
                             ->rows(3)

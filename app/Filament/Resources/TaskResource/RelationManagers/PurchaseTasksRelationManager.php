@@ -35,10 +35,10 @@ class PurchaseTasksRelationManager extends RelationManager
                         TextEntry::make('supplier.name')->label(__('app.fields.supplier')),
                         TextEntry::make('product.name')->label(__('app.fields.product'))->placeholder('—'),
                         TextEntry::make('quantity'),
-                        TextEntry::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.unit_price')),
-                        TextEntry::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final')),
+                        TextEntry::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.unit_price')),
+                        TextEntry::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                        TextEntry::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.final')),
                     ]),
             ]);
     }
@@ -74,7 +74,7 @@ class PurchaseTasksRelationManager extends RelationManager
                 TextInput::make('unit_price')
                     ->numeric()
                     ->minValue(0)
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->required()
                     ->reactive()
@@ -88,13 +88,13 @@ class PurchaseTasksRelationManager extends RelationManager
                     }),
                 TextInput::make('total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->readOnly(),
                 TextInput::make('discount')
                     ->numeric()
                     ->minValue(0)
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->reactive()
                     ->afterStateUpdated(function (Get $get, Set $set) {
@@ -104,7 +104,7 @@ class PurchaseTasksRelationManager extends RelationManager
                     }),
                 TextInput::make('final_total')
                     ->numeric()
-                    ->prefix('EGP')
+                    ->prefix('IDR')
                     ->default(0)
                     ->readOnly(),
             ]);
@@ -118,10 +118,10 @@ class PurchaseTasksRelationManager extends RelationManager
                 TextColumn::make('supplier.name')->label(__('app.fields.supplier'))->sortable(),
                 TextColumn::make('product.name')->label(__('app.fields.product'))->placeholder('—'),
                 TextColumn::make('quantity'),
-                TextColumn::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.unit_price')),
-                TextColumn::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                TextColumn::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP'),
-                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' EGP')->label(__('app.fields.final')),
+                TextColumn::make('unit_price')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.unit_price')),
+                TextColumn::make('total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                TextColumn::make('discount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR'),
+                TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.fields.final')),
             ])
             ->recordActions([
                 Actions\ViewAction::make(),
