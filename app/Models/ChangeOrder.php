@@ -27,58 +27,70 @@ class ChangeOrder extends Model
         static::created(function ($changeOrder) {
             if ($changeOrder->status === 'Approved') {
                 $project = $changeOrder->project;
-                if ($changeOrder->type === 'Addition') {
-                    $project->final_total += $changeOrder->amount;
+                if ($project->is_rab_auto_calculated) {
+                    $project->recalculateFinalTotal();
                 } else {
-                    $project->final_total -= $changeOrder->amount;
+                    if ($changeOrder->type === 'Addition') {
+                        $project->final_total += $changeOrder->amount;
+                    } else {
+                        $project->final_total -= $changeOrder->amount;
+                    }
+                    $project->save();
                 }
-                $project->save();
             }
         });
 
         static::updated(function ($changeOrder) {
-            if ($changeOrder->isDirty('status')) {
-                $project = $changeOrder->project;
-                
-                // If it changed TO Approved, add it
-                if ($changeOrder->status === 'Approved') {
-                    if ($changeOrder->type === 'Addition') {
-                        $project->final_total += $changeOrder->amount;
-                    } else {
-                        $project->final_total -= $changeOrder->amount;
-                    }
-                } 
-                // If it changed FROM Approved to something else, revert it
-                elseif ($changeOrder->getOriginal('status') === 'Approved') {
-                    if ($changeOrder->type === 'Addition') {
-                        $project->final_total -= $changeOrder->amount;
-                    } else {
-                        $project->final_total += $changeOrder->amount;
-                    }
+            $project = $changeOrder->project;
+            if ($project->is_rab_auto_calculated) {
+                if ($changeOrder->isDirty('status') || ($changeOrder->isDirty('amount') && $changeOrder->status === 'Approved')) {
+                    $project->recalculateFinalTotal();
                 }
-                $project->save();
-            } elseif ($changeOrder->isDirty('amount') && $changeOrder->status === 'Approved') {
-                // If amount changed while it's already approved
-                $project = $changeOrder->project;
-                $diff = $changeOrder->amount - $changeOrder->getOriginal('amount');
-                if ($changeOrder->type === 'Addition') {
-                    $project->final_total += $diff;
-                } else {
-                    $project->final_total -= $diff;
+            } else {
+                if ($changeOrder->isDirty('status')) {
+                    // If it changed TO Approved, add it
+                    if ($changeOrder->status === 'Approved') {
+                        if ($changeOrder->type === 'Addition') {
+                            $project->final_total += $changeOrder->amount;
+                        } else {
+                            $project->final_total -= $changeOrder->amount;
+                        }
+                    } 
+                    // If it changed FROM Approved to something else, revert it
+                    elseif ($changeOrder->getOriginal('status') === 'Approved') {
+                        if ($changeOrder->type === 'Addition') {
+                            $project->final_total -= $changeOrder->amount;
+                        } else {
+                            $project->final_total += $changeOrder->amount;
+                        }
+                    }
+                    $project->save();
+                } elseif ($changeOrder->isDirty('amount') && $changeOrder->status === 'Approved') {
+                    // If amount changed while it's already approved
+                    $diff = $changeOrder->amount - $changeOrder->getOriginal('amount');
+                    if ($changeOrder->type === 'Addition') {
+                        $project->final_total += $diff;
+                    } else {
+                        $project->final_total -= $diff;
+                    }
+                    $project->save();
                 }
-                $project->save();
             }
         });
         
         static::deleted(function ($changeOrder) {
             if ($changeOrder->status === 'Approved') {
                 $project = $changeOrder->project;
-                if ($changeOrder->type === 'Addition') {
-                    $project->final_total -= $changeOrder->amount;
+                if ($project->is_rab_auto_calculated) {
+                    $project->recalculateFinalTotal();
                 } else {
-                    $project->final_total += $changeOrder->amount;
+                    if ($changeOrder->type === 'Addition') {
+                        $project->final_total -= $changeOrder->amount;
+                    } else {
+                        $project->final_total += $changeOrder->amount;
+                    }
+                    $project->save();
                 }
-                $project->save();
             }
         });
     }

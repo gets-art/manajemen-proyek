@@ -55,13 +55,17 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            TasksRelationManager::class,
-            ProjectBudgetsRelationManager::class,
-            ChangeOrdersRelationManager::class,
-            PaymentTermsRelationManager::class,
-            PaymentsRelationManager::class,
-            ExpensesRelationManager::class,
-            ImagesRelationManager::class,
+            \Filament\Resources\RelationManagers\RelationGroup::make('Administrasi & Keuangan', [
+                ProjectBudgetsRelationManager::class,
+                ChangeOrdersRelationManager::class,
+                PaymentTermsRelationManager::class,
+                PaymentsRelationManager::class,
+                ExpensesRelationManager::class,
+            ]),
+            \Filament\Resources\RelationManagers\RelationGroup::make('Teknis & Operasional', [
+                TasksRelationManager::class,
+                ImagesRelationManager::class,
+            ]),
         ];
     }
 

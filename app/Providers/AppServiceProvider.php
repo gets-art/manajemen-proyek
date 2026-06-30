@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Payment;
+use App\Models\ProjectBudget;
+use App\Observers\PaymentObserver;
+use App\Observers\ProjectBudgetObserver;
 use BezhanSalleh\LanguageSwitch\LanguageSwitch;
 use Illuminate\Support\ServiceProvider;
 
@@ -20,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        \App\Models\Payment::observe(\App\Observers\PaymentObserver::class);
+        Payment::observe(PaymentObserver::class);
+        ProjectBudget::observe(ProjectBudgetObserver::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch

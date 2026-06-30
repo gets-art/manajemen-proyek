@@ -63,7 +63,8 @@ class ProjectBudgetsRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                \Filament\Actions\CreateAction::make(),
+                \Filament\Actions\CreateAction::make()
+                    ->after(fn ($livewire) => $livewire->dispatch('refresh-form')),
                 \Filament\Actions\Action::make('import')
                     ->label('Import Excel')
                     ->icon('heroicon-o-arrow-up-tray')
@@ -102,15 +103,20 @@ class ProjectBudgetsRelationManager extends RelationManager
                             ->title('RAB berhasil diimport')
                             ->success()
                             ->send();
+
+                        $livewire->dispatch('refresh-form');
                     }),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
-                \Filament\Actions\DeleteAction::make(),
+                \Filament\Actions\EditAction::make()
+                    ->after(fn ($livewire) => $livewire->dispatch('refresh-form')),
+                \Filament\Actions\DeleteAction::make()
+                    ->after(fn ($livewire) => $livewire->dispatch('refresh-form')),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 \Filament\Actions\BulkActionGroup::make([
-                    \Filament\Actions\DeleteBulkAction::make(),
+                    \Filament\Actions\DeleteBulkAction::make()
+                        ->after(fn ($livewire) => $livewire->dispatch('refresh-form')),
                 ]),
             ]);
     }

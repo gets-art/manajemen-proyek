@@ -78,6 +78,12 @@ class ProjectForm
                     ->columns(4)
                     ->columnSpanFull()
                     ->schema([
+                        \Filament\Forms\Components\Toggle::make('is_rab_auto_calculated')
+                            ->label('Gunakan Total RAB sebagai Nilai Kontrak')
+                            ->helperText('Jika aktif, Nilai Kontrak akan dihitung otomatis dari RAB dan Addendum.')
+                            ->live()
+                            ->columnSpanFull(),
+
                         TextInput::make('final_total')
                             ->label(__('app.fields.final_total'))
                             ->numeric()
@@ -85,6 +91,8 @@ class ProjectForm
                             ->stripCharacters(',')
                             ->minValue(0)
                             ->prefix('IDR')
+                            ->disabled(fn ($get) => $get('is_rab_auto_calculated'))
+                            ->dehydrated(fn ($get) => !$get('is_rab_auto_calculated'))
                             ->default(0),
 
                         TextInput::make('paid_total')

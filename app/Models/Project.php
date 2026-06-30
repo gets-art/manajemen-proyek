@@ -19,6 +19,7 @@ class Project extends Model
         'start_date',
         'end_date',
         'status',
+        'is_rab_auto_calculated',
         'final_total',
         'paid_total',
         'rest_total',
@@ -46,6 +47,7 @@ class Project extends Model
     {
         return [
             'status' => 'integer',
+            'is_rab_auto_calculated' => 'boolean',
             'final_total' => 'decimal:2',
             'paid_total' => 'decimal:2',
             'rest_total' => 'decimal:2',
@@ -113,5 +115,28 @@ class Project extends Model
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public function recalculateFinalTotal(): void
+    {
+        if ($this->is_rab_auto_calculated) {
+            $budgetTotal = $this->projectBudgets()->sum('total_price') ?? 0;
+            $addendumTotal = 0;
+            
+            $approvedChangeOrders = $this->changeOrders()->where('status', 'Approved')->get();
+            foreach ($approvedChangeOrders as $co) {
+                if ($co->type === 'Addition') {
+                    $addendumTotal += $co->amount;
+                } else {
+                    $addendumTotal -= $co->amount;
+                }
+            }
+            
+            $this->final_total = $budgetTotal + $addendumTotal;
+            // Prevent recursive saving loops by using saveQuietly for the final_total change, 
+            // but we might need to trigger the rest_total calculation which is in the saving hook.
+            // Let's just update final_total and let the normal saving hook calculate rest_total.
+            $this->save(); 
+        }
     }
 }
