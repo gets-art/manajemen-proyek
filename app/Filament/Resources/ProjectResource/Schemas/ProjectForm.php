@@ -32,14 +32,14 @@ class ProjectForm
                             ->getOptionLabelFromRecordUsing(fn ($record) => "{$record->name} " . ($record->address ? " - {$record->address}" : ""))
                             ->searchable()
                             ->preload()
-                            ->nullable(),
+                            ->required(),
 
                         Select::make('category_id')
                             ->label(__('app.fields.category'))
                             ->relationship('category', 'name')
                             ->searchable()
                             ->preload()
-                            ->nullable(),
+                            ->required(),
 
                         Select::make('status')
                             ->label(__('app.fields.status'))
