@@ -80,9 +80,16 @@ class ProjectForm
                     ->schema([
                         \Filament\Forms\Components\Toggle::make('is_rab_auto_calculated')
                             ->label('Gunakan Total RAB sebagai Nilai Kontrak')
-                            ->helperText('Jika aktif, Nilai Kontrak akan dihitung otomatis dari RAB dan Addendum.')
+                            ->helperText('Jika aktif, Nilai Kontrak akan dihitung otomatis dari RAB, Jasa Kontraktor, dan Addendum.')
                             ->live()
                             ->columnSpanFull(),
+
+                        TextInput::make('contractor_fee_percentage')
+                            ->label('Jasa Kontraktor (%)')
+                            ->numeric()
+                            ->suffix('%')
+                            ->default(10.00)
+                            ->visible(fn ($get) => $get('is_rab_auto_calculated')),
 
                         TextInput::make('final_total')
                             ->label(__('app.fields.final_total'))

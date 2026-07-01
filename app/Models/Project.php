@@ -20,6 +20,7 @@ class Project extends Model
         'end_date',
         'status',
         'is_rab_auto_calculated',
+        'contractor_fee_percentage',
         'final_total',
         'paid_total',
         'rest_total',
@@ -48,6 +49,7 @@ class Project extends Model
         return [
             'status' => 'integer',
             'is_rab_auto_calculated' => 'boolean',
+            'contractor_fee_percentage' => 'decimal:2',
             'final_total' => 'decimal:2',
             'paid_total' => 'decimal:2',
             'rest_total' => 'decimal:2',
@@ -121,8 +123,14 @@ class Project extends Model
     {
         if ($this->is_rab_auto_calculated) {
             $budgetTotal = $this->projectBudgets()->sum('total_price') ?? 0;
-            $addendumTotal = 0;
             
+            // Calculate Contractor Fee
+            $feePercentage = $this->contractor_fee_percentage ?? 0;
+            $contractorFee = $budgetTotal * ($feePercentage / 100);
+            
+            $baseTotal = $budgetTotal + $contractorFee;
+            
+            $addendumTotal = 0;
             $approvedChangeOrders = $this->changeOrders()->where('status', 'Approved')->get();
             foreach ($approvedChangeOrders as $co) {
                 if ($co->type === 'Addition') {
@@ -132,7 +140,7 @@ class Project extends Model
                 }
             }
             
-            $this->final_total = $budgetTotal + $addendumTotal;
+            $this->final_total = $baseTotal + $addendumTotal;
             // Prevent recursive saving loops by using saveQuietly for the final_total change, 
             // but we might need to trigger the rest_total calculation which is in the saving hook.
             // Let's just update final_total and let the normal saving hook calculate rest_total.

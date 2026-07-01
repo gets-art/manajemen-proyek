@@ -9,6 +9,8 @@ class ProjectBudget extends Model
 {
     protected $fillable = [
         'project_id',
+        'group',
+        'subgroup',
         'name',
         'description',
         'quantity',

@@ -17,15 +17,17 @@ class TasksTable
     public static function configure(Table $table): Table
     {
         return $table
-            ->modifyQueryUsing(fn ($query) => $query->with(['project', 'category']))
+            ->modifyQueryUsing(fn ($query) => $query->with(['project', 'category', 'projectBudget']))
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('name')->searchable()->sortable()->limit(30),
                 TextColumn::make('project.name')->label(__('app.fields.project'))->sortable()->limit(20),
+                TextColumn::make('projectBudget.name')->label('Item RAB')->sortable()->limit(20),
                 TextColumn::make('category.name')->label(__('app.fields.category'))->placeholder('—')->sortable(),
+                TextColumn::make('contract_amount')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label('Nilai Kontrak')->sortable(),
                 TextColumn::make('final_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.total'))->sortable(),
                 TextColumn::make('paid_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.paid'))->sortable(),
-                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label(__('app.columns.rest'))->sortable(),
+                TextColumn::make('rest_total')->formatStateUsing(fn ($state) => number_format((float) $state, 2) . ' IDR')->label('Sisa Tagihan (Tukang)')->sortable(),
                 TextColumn::make('start_date')->date()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('end_date')->date()->sortable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),

@@ -20,20 +20,31 @@ class ProjectBudgetsRelationManager extends RelationManager
     {
         return $schema
             ->components([
+                TextInput::make('group')
+                    ->label('Kelompok Pekerjaan (Misal: PEKERJAAN STRUKTUR)')
+                    ->maxLength(255),
+                TextInput::make('subgroup')
+                    ->label('Sub-Kelompok (Misal: Struktur Beton)')
+                    ->maxLength(255),
                 TextInput::make('name')
+                    ->label('Uraian Pekerjaan')
                     ->required()
                     ->maxLength(255),
                 Textarea::make('description')
+                    ->label('Spesifikasi')
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 TextInput::make('quantity')
+                    ->label('Volume')
                     ->required()
                     ->numeric()
                     ->default(1),
                 TextInput::make('unit')
+                    ->label('Satuan')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('unit_price')
+                    ->label('Harga Satuan')
                     ->required()
                     ->numeric()
                     ->mask(\Filament\Support\RawJs::make('$money($input)'))
@@ -45,16 +56,32 @@ class ProjectBudgetsRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
+            ->groups([
+                \Filament\Tables\Grouping\Group::make('group')
+                    ->label('Kelompok')
+                    ->collapsible(),
+                \Filament\Tables\Grouping\Group::make('subgroup')
+                    ->label('Sub-Kelompok')
+                    ->collapsible(),
+            ])
+            ->defaultGroup('group')
             ->columns([
+                Tables\Columns\TextColumn::make('group')->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('subgroup')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Uraian')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('quantity')
+                    ->label('Vol')
                     ->numeric(),
-                Tables\Columns\TextColumn::make('unit'),
+                Tables\Columns\TextColumn::make('unit')
+                    ->label('Satuan'),
                 Tables\Columns\TextColumn::make('unit_price')
+                    ->label('Harga Satuan')
                     ->money('IDR')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
+                    ->label('Total Harga')
                     ->money('IDR')
                     ->sortable()
                     ->summarize(Tables\Columns\Summarizers\Sum::make()->money('IDR')),
@@ -91,11 +118,13 @@ class ProjectBudgetsRelationManager extends RelationManager
                             if (empty(array_filter($row))) continue;
                             
                             $livewire->getOwnerRecord()->projectBudgets()->create([
-                                'name' => $row[0] ?? 'Item',
-                                'description' => $row[1] ?? null,
-                                'quantity' => (float) ($row[2] ?? 1),
-                                'unit' => $row[3] ?? 'ls',
-                                'unit_price' => (float) ($row[4] ?? 0),
+                                'group' => $row[0] ?? null,
+                                'subgroup' => $row[1] ?? null,
+                                'name' => $row[2] ?? 'Item',
+                                'description' => $row[3] ?? null,
+                                'quantity' => (float) ($row[4] ?? 1),
+                                'unit' => $row[5] ?? 'ls',
+                                'unit_price' => (float) ($row[6] ?? 0),
                             ]);
                         }
                         

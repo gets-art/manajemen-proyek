@@ -19,8 +19,10 @@ class Task extends Model
     protected $fillable = [
         'project_id',
         'category_id',
+        'project_budget_id',
         'name',
         'description',
+        'contract_amount',
         'final_total',
         'rest_total',
         'paid_total',
@@ -33,6 +35,10 @@ class Task extends Model
     protected static function booted()
     {
         static::saving(function ($task) {
+            // For tasks, final_total can be set to contract_amount for borongan workers
+            if ($task->contract_amount > 0 && empty($task->final_total)) {
+                $task->final_total = $task->contract_amount;
+            }
             $task->rest_total = $task->final_total - $task->paid_total;
         });
     }
@@ -40,6 +46,7 @@ class Task extends Model
     protected function casts(): array
     {
         return [
+            'contract_amount' => 'decimal:2',
             'final_total' => 'decimal:2',
             'rest_total' => 'decimal:2',
             'paid_total' => 'decimal:2',
@@ -51,6 +58,11 @@ class Task extends Model
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
+    }
+
+    public function projectBudget(): BelongsTo
+    {
+        return $this->belongsTo(ProjectBudget::class);
     }
 
     public function category(): BelongsTo

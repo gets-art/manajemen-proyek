@@ -30,7 +30,15 @@ class TaskForm
                             ->relationship('project', 'name')
                             ->required()
                             ->searchable()
-                            ->preload(),
+                            ->preload()
+                            ->live(),
+
+                        Select::make('project_budget_id')
+                            ->label('Item RAB (Project Budget)')
+                            ->relationship('projectBudget', 'name', fn ($query, $get) => $query->where('project_id', $get('project_id')))
+                            ->searchable()
+                            ->preload()
+                            ->nullable(),
 
                         Select::make('category_id')
                             ->label(__('app.fields.category'))
@@ -59,8 +67,19 @@ class TaskForm
                     ->columns(3)
                     ->columnSpanFull()
                     ->schema([
+                        TextInput::make('contract_amount')
+                            ->label('Nilai Kontrak Tukang')
+                            ->helperText('Diisi jika task ini diborongkan (Upah Kesepakatan)')
+                            ->numeric()
+                            ->mask(\Filament\Support\RawJs::make('$money($input)'))
+                            ->stripCharacters(',')
+                            ->minValue(0)
+                            ->prefix('IDR')
+                            ->default(0),
+
                         TextInput::make('final_total')
                             ->label(__('app.fields.final_total'))
+                            ->helperText('Otomatis disamakan dengan Nilai Kontrak jika kosong.')
                             ->numeric()
                             ->mask(\Filament\Support\RawJs::make('$money($input)'))
                             ->stripCharacters(',')
